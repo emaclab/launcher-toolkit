@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "core_api": 2,
+  "game": {
+    "id": "minimal-example",
+    "name": "Minimal Example",
+    "client_version": 2,
+    "download_size": 536870912,
+    "allowed_hosts": ["example.com"],
+    "links": {
+      "website": "https://example.com/"
+    }
+  },
+  "languages": { "default": "en", "available": ["en"] },
+  "pages": ["home", "settings"],
+  "styles": ["styles/app.css"],
+  "data": ["news"],
+  "feed": null,
+  "error_state": "toast",
+  "state": {
+    "toast": { "type": "string", "default": "" },
+    "confirm": { "type": "string", "default": "", "values": ["", "cancel_download"], "reset": "page" },
+    "tip": { "type": "string", "default": "", "reset": "page" },
+    "article": { "type": "string", "default": "" },
+    "read": { "type": "set", "default": [], "persist": true },
+    "accent": { "type": "string", "default": "blue", "values": ["blue", "green", "orange"], "persist": true },
+    "accent_menu": { "type": "bool", "default": false, "reset": "page" },
+    "details": { "type": "bool", "default": true, "persist": true },
+    "folder": { "type": "string", "default": "", "persist": true }
+  }
+}

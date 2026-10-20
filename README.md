@@ -1,27 +1,86 @@
-# launcher-toolkit
+# Launcher Toolkit
 
-Release-only repository. The core repository `emaclab/launcher-global` creates every release
-`vX.Y.Z` from a version tag. There is no source code here and no workflow.
+One Windows executable for creating, previewing, checking, and building launcher packs.
 
-## Release assets
+- [Documentation](https://emaclab.github.io/launcher-toolkit/)
+- [Download](https://github.com/emaclab/launcher-toolkit/releases)
+- [Quickstart](https://emaclab.github.io/launcher-toolkit/getting-started/quickstart/)
+- [Starters and license](https://emaclab.github.io/launcher-toolkit/getting-started/starters/)
+
+## Get started
+
+Download the Windows x64 toolkit and `SHA256SUMS` from the same release. Verify the hash before
+running it, rename it to `launcher-toolkit.exe`, then install for your Windows user:
+
+```powershell
+.\launcher-toolkit.exe install
+```
+
+The CLI installs into `%USERPROFILE%\.local\bin` without administrator rights. Open a new terminal.
+
+```powershell
+launcher-toolkit init my-game
+cd my-game
+launcher-toolkit dev
+launcher-toolkit check
+launcher-toolkit build
+```
+
+Without arguments, the executable opens a terminal menu. Updates and removal are explicit:
+
+```powershell
+launcher-toolkit update --version v0.2.0
+launcher-toolkit uninstall
+```
+
+## What the release provides
 
 | Asset | Use |
 | --- | --- |
-| `launcher-core-vX.Y.Z-windows-x64.exe` | The generic launcher core, before `stamp` |
-| `launcher-publish-vX.Y.Z-windows-x64.exe`, `launcher-publish-vX.Y.Z-linux-x64` | Pack build, validation, stamp, installer and publish tool |
-| `pack-studio-vX.Y.Z-windows-x64.exe` | Pack studio for designers: live preview, state simulator, checks |
-| `tailwindcss-windows-x64.exe` | Tailwind CLI v4.3.3; keep it next to `pack-studio.exe` |
-| `SHA256SUMS` | SHA-256 of every asset |
+| `launcher-toolkit-vX.Y.Z-windows-x64.exe` | Project creation, Studio, simulator, checks, styles, builds, and reference |
+| `launcher-starter-minimal-vX.Y.Z.zip` | Small complete project, downloaded by `init` |
+| `launcher-starter-complete-vX.Y.Z.zip` | Full example project, downloaded by `init` |
+| `SHA256SUMS` | Download integrity checks |
+| `THIRD_PARTY_NOTICES.html` | Bundled dependencies' notices |
 
-Check the SHA-256 of each download against `SHA256SUMS`. No asset contains a secret: signing
-and publishing need keys that only the vendor's publisher repository holds.
+Starters use plain CSS. No separate Studio or manual Tailwind installation is required.
+The toolkit obtains its pinned Tailwind compiler only for projects that use it.
+A project's `.toolkit-version` is used by its included Windows CI.
 
-## Third-party notice
+Starter downloads retain the restricted license for EMAC Anti-Cheat-integrated games. Public
+availability does not grant unrestricted use. The current game update, anti-cheat status, and game
+start are simulated; these controls let you test pack presentation.
 
-`tailwindcss-windows-x64.exe` is the standalone Tailwind CSS CLI, redistributed unmodified from
-<https://github.com/tailwindlabs/tailwindcss/releases> under the MIT License:
+## Runnable example
 
+The original small pack remains under [`examples/minimal-pack/`](examples/minimal-pack/).
+Run these commands from this repository with the matching toolkit version:
+
+```powershell
+launcher-toolkit dev examples/minimal-pack
+launcher-toolkit check examples/minimal-pack
+launcher-toolkit build examples/minimal-pack --out "$env:TEMP\minimal-pack.zip"
 ```
+
+## Documentation development
+
+Only editing this documentation needs Node.js 24 LTS and npm:
+
+```sh
+npm ci
+npm run dev
+npm run build
+```
+
+Open `http://localhost:4321/launcher-toolkit/`. Keep public guides focused on authoring commands,
+pack files, and usable examples. Do not add implementation sources, administrative instructions,
+private repository references, or credentials.
+
+## Optional Tailwind notice
+
+The automatically acquired standalone Tailwind CSS CLI retains the MIT License:
+
+```text
 MIT License
 
 Copyright (c) Tailwind Labs, Inc.

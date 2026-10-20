@@ -1,0 +1,49 @@
+{#- Bottom bar: anti-cheat status, update progress and launcher actions. launcher.phase is one of
+    checking, downloading, paused, verifying, ready, cancelled, launching. The core ignores a
+    launcher action that does not fit the current phase. -#}
+{%- set phase = launcher.phase -%}
+{%- set transfer = phase in ["downloading", "paused"] -%}
+{%- set left = duration(launcher.eta) -%}
+<footer class="launch-bar" data-phase="{{ phase }}">
+  <div class="tip-anchor">
+    <button class="protection" aria-describedby="tip-protection" data-widget="tooltip" data-state="tip" data-value="protection">
+      <span class="protection-dot" data-status="{{ anticheat.status }}"></span>
+      <span>{{ t("anticheat." ~ anticheat.status) }}</span>
+    </button>
+    {%- if state.tip == "protection" %}
+    <span id="tip-protection" class="tooltip tooltip-up" role="tooltip" data-key="tip-protection">
+      {{- t("anticheatTip") }}{% if anticheat.simulated %} {{ t("simulated") }}{% endif -%}
+    </span>
+    {%- endif %}
+  </div>
+  <div class="progress-area">
+    <span class="phase-label">{{ t("phase." ~ phase) }}</span>
+    <div class="progress" role="progressbar" aria-label="{{ t('phase.' ~ phase) }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ launcher.progress|int }}">
+      <span style="width:{{ launcher.progress|num }}%"></span>
+    </div>
+    <span class="progress-detail">
+      {%- if phase == "ready" %}{{ t("version") }} {{ launcher.client_version }}
+      {%- elif state.details and transfer and launcher.total is not none %}{{ bytes(launcher.downloaded) }} / {{ bytes(launcher.total) }}
+        {%- if launcher.speed is not none %} · {{ bytes(launcher.speed) }}/s{% endif %}
+        {%- if left %} · {% if left.hours %}{{ left.hours }}h {% endif %}{{ left.minutes }}m {{ left.seconds }}s{% endif %}
+      {%- endif -%}
+    </span>
+  </div>
+  <div class="launch-actions">
+    {%- if phase == "downloading" %}
+    <button class="button" data-key="pause" data-on-click="pause()">{{ t("pause") }}</button>
+    {%- elif phase == "paused" %}
+    <button class="button" data-key="resume" data-on-click="resume()">{{ t("resume") }}</button>
+    {%- endif %}
+    {%- if transfer %}
+    <button id="cancel-download" class="button" data-on-click="set('confirm', 'cancel_download')">{{ t("cancel") }}</button>
+    {%- elif phase == "ready" %}
+    <button class="button" data-key="check" data-on-click="check()">{{ t("checkUpdates") }}</button>
+    {%- endif %}
+    {%- if phase == "cancelled" %}
+    <button id="primary-action" class="button primary" data-on-click="retry()">{{ t("retry") }}</button>
+    {%- else %}
+    <button id="primary-action" class="button primary"{% if phase != "ready" %} disabled{% endif %} data-on-click="play()">{{ t("play") }}</button>
+    {%- endif %}
+  </div>
+</footer>

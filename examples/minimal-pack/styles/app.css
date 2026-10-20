@@ -1,0 +1,692 @@
+/* Runtime stylesheet of the minimal example pack (pack.json "styles"). Plain CSS, no build
+   step. The renderer does not support :has(), :focus-visible, :focus-within, position: sticky,
+   text-overflow, line-clamp, mix-blend-mode, backdrop-filter, filter, 3D transforms or
+   prefers-reduced-motion queries, so none of them appear here. */
+
+:root {
+  --bg: #11161f;
+  --bar: #0c1017;
+  --surface: #18202c;
+  --raised: #202a38;
+  --border: #2b3647;
+  --text: #e8edf5;
+  --muted: #9aa6b8;
+  --accent: #4f8cff;
+  --accent-soft: rgba(79, 140, 255, 0.16);
+  --ready: #3ccf8e;
+  --warning: #f0b74a;
+  --danger: #ef5b6b;
+}
+
+/* The accent setting: the root element carries data-accent="{{ state.accent }}". */
+.app[data-accent="green"] {
+  --accent: #2fbf7f;
+  --accent-soft: rgba(47, 191, 127, 0.16);
+}
+
+.app[data-accent="orange"] {
+  --accent: #ff8c24;
+  --accent-soft: rgba(255, 140, 36, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* :focus-visible never matches in this renderer; :focus is the keyboard focus indicator. */
+button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Window frame -------------------------------------------------------------- */
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background: var(--bar);
+}
+
+.titlebar-drag {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 40px;
+  padding-left: 16px;
+}
+
+.titlebar-name {
+  font-weight: 600;
+}
+
+.window-button {
+  width: 46px;
+  height: 40px;
+  color: var(--muted);
+  font-size: 16px;
+  text-align: center;
+}
+
+.window-button:hover {
+  background: var(--raised);
+  color: var(--text);
+}
+
+.window-close:hover {
+  background: var(--danger);
+}
+
+.nav {
+  display: flex;
+  height: 44px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 14px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--text);
+}
+
+.nav-item.active {
+  border-bottom-color: var(--accent);
+}
+
+.badge {
+  min-width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding: 20px 24px;
+}
+
+/* Home ---------------------------------------------------------------------- */
+
+.home {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  margin-right: 20px;
+  overflow-y: auto;
+}
+
+.news-row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  padding: 10px 28px 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.news-row:hover {
+  border-color: var(--accent);
+}
+
+.news-row.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.news-date {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.unread-dot {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--accent);
+}
+
+.article {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 24px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.article h1 {
+  font-size: 22px;
+}
+
+/* Markdown output has no classes except .md-link: style it with descendant selectors. */
+.article-body {
+  margin-top: 14px;
+}
+
+.article-body p,
+.article-body ul,
+.article-body ol,
+.article-body blockquote {
+  margin: 0 0 10px;
+}
+
+.article-body h2 {
+  margin: 14px 0 8px;
+  font-size: 16px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 20px;
+}
+
+.article-body blockquote {
+  padding-left: 12px;
+  border-left: 3px solid var(--border);
+  color: var(--muted);
+}
+
+.article-body code {
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: var(--raised);
+  font-family: Consolas, monospace;
+}
+
+.article-body .md-link {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.link-button {
+  margin-top: 6px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+/* Settings ------------------------------------------------------------------ */
+
+.settings {
+  flex: 1;
+  min-height: 0;
+  max-width: 640px;
+  overflow-y: auto;
+}
+
+.settings h1 {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.setting-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-right: 16px;
+}
+
+.setting-title {
+  display: flex;
+  align-items: center;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.select {
+  position: relative;
+}
+
+.select-button {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--raised);
+}
+
+.select-button[aria-expanded="true"] {
+  border-color: var(--accent);
+}
+
+.select-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+  margin-top: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--raised);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+  padding: 7px 8px;
+  border-radius: 4px;
+}
+
+.select-option:hover {
+  background: var(--accent-soft);
+}
+
+.select-option.chosen {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  border-radius: 6px;
+  background: #4f8cff;
+}
+
+.swatch[data-color="green"] {
+  background: #2fbf7f;
+}
+
+.swatch[data-color="orange"] {
+  background: #ff8c24;
+}
+
+.switch {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--border);
+}
+
+.switch span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.switch[aria-checked="true"] {
+  background: var(--accent);
+}
+
+.switch[aria-checked="true"] span {
+  left: 21px;
+}
+
+.help {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.path-actions {
+  display: flex;
+}
+
+.path-actions .button {
+  margin-left: 8px;
+}
+
+.settings-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+}
+
+/* Tooltip widget: rendered only while shown, positioned against its .tip-anchor. */
+.tip-anchor {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 30;
+  width: 260px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bar);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.tooltip-up {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+/* Buttons ------------------------------------------------------------------- */
+
+.button {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--raised);
+  font-weight: 600;
+}
+
+.button:hover {
+  border-color: var(--accent);
+}
+
+.button.primary {
+  justify-content: center;
+  min-width: 120px;
+  height: 44px;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.button.danger {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: #ffffff;
+}
+
+/* Launch bar ---------------------------------------------------------------- */
+
+.launch-bar {
+  display: flex;
+  align-items: center;
+  height: 88px;
+  padding: 0 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bar);
+}
+
+.protection {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.protection-dot {
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  border-radius: 5px;
+  background: var(--warning);
+}
+
+.protection-dot[data-status="ready"] {
+  background: var(--ready);
+}
+
+.protection-dot[data-status="unavailable"],
+.protection-dot[data-status="error"] {
+  background: var(--danger);
+}
+
+.progress-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 24px;
+}
+
+.phase-label {
+  font-weight: 600;
+}
+
+.progress {
+  height: 6px;
+  margin: 6px 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--border);
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.launch-bar[data-phase="ready"] .progress span {
+  background: var(--ready);
+}
+
+.progress-detail {
+  min-height: 17px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.launch-actions {
+  display: flex;
+  align-items: center;
+}
+
+.launch-actions .button {
+  margin-left: 8px;
+}
+
+/* Toast and dialog ---------------------------------------------------------- */
+
+.toast {
+  position: absolute;
+  right: 24px;
+  bottom: 104px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 16px;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.toast-close {
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.toast-close:hover {
+  background: var(--raised);
+}
+
+/* The modal element is the backdrop: a click whose target is this element closes it. */
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 8, 12, 0.72);
+}
+
+.dialog {
+  width: 400px;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+}
+
+.dialog h2 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.dialog p {
+  color: var(--muted);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.dialog-actions .button {
+  margin-left: 10px;
+}
+
+/* Splash -------------------------------------------------------------------- */
+
+.splash {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.splash-title {
+  font-size: 28px;
+}
+
+.splash-status {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.splash-protection {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* The core paints the mark into this box (at least 120 x 24 px, inside the window). */
+.splash-mark {
+  width: 171px;
+  height: 34px;
+  margin-left: 10px;
+}

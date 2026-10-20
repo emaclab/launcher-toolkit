@@ -1,0 +1,18 @@
+[
+  {
+    "id": "welcome",
+    "date": "2026-10-15",
+    "title": { "en": "Welcome to the minimal pack" },
+    "body": {
+      "en": "This pack is a **complete** launcher interface in a few files.\n\n- Select an article in the list. The core marks it as read and remembers it.\n- Open **Settings** to change persisted values.\n- Watch the bottom bar: the core simulates an update before **Play** is enabled.\n\nRead more on the [example website](https://example.com/)."
+    }
+  },
+  {
+    "id": "patch-2",
+    "date": "2026-10-12",
+    "title": { "en": "Patch notes: version 2" },
+    "body": {
+      "en": "## Changes\n\n1. New map rotation.\n2. Faster matchmaking.\n3. Fixed the `scoreboard` layout.\n\n> Links work only for hosts in `game.allowed_hosts`: [this one is allowed](https://example.com/patch-2), and [this one is plain text](https://example.org/)."
+    }
+  }
+]

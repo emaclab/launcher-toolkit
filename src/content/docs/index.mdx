@@ -1,0 +1,65 @@
+---
+title: Launcher Toolkit
+description: Create, preview, check, and build a launcher pack with one Windows executable.
+template: splash
+hero:
+  tagline: One Windows tool for creating your project, previewing widgets and settings, checking files, and building a launcher pack.
+  actions:
+    - text: Quickstart
+      link: /launcher-toolkit/getting-started/quickstart/
+      icon: rocket
+    - text: Download the toolkit
+      link: https://github.com/emaclab/launcher-toolkit/releases/latest
+      icon: external
+      variant: secondary
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Start with one command
+
+Install the toolkit once, then create a project:
+
+```powershell
+launcher-toolkit init my-game
+cd my-game
+launcher-toolkit dev
+```
+
+Choose a **minimal** or **complete** starter. Both use plain CSS, include the required pack files,
+and come with a Windows build workflow. No separate template access, Studio executable, Rust,
+Node.js, or npm installation is needed.
+
+<CardGrid>
+  <LinkCard title="Get started" description="Requirements, installation, a first project, and its first build."
+    href="/launcher-toolkit/getting-started/quickstart/" />
+  <LinkCard title="Starters" description="Choose a small starting point or a complete example launcher."
+    href="/launcher-toolkit/getting-started/starters/" />
+  <LinkCard title="Studio and tools" description="Preview changes, use the simulator, check files, and build a ZIP."
+    href="/launcher-toolkit/guides/studio/" />
+  <LinkCard title="Pack reference" description="Configuration, templates, actions, settings, translations, and limits."
+    href="/launcher-toolkit/reference/pack-config/" />
+  <LinkCard title="Widgets" description="Working markup, required state, attributes, and keyboard behavior."
+    href="/launcher-toolkit/widgets/" />
+  <LinkCard title="Examples" description="Adapt news, settings, calendars, server status, and launch controls."
+    href="/launcher-toolkit/examples/" />
+</CardGrid>
+
+## Check and build
+
+```powershell
+launcher-toolkit check
+launcher-toolkit build
+```
+
+Build runs complete checks before creating the pack. Errors stop it; warnings remain visible.
+The project records its tool version in `.toolkit-version`, and CI uses that same release.
+Tailwind is optional and downloaded by the toolkit only when the project uses it.
+
+<Aside type="caution" title="Preview limitations">
+The current game download, installation, anti-cheat status, and game start are simulated.
+Use these controls to test presentation. They do not install or start a game client.
+</Aside>
+
+Starters are public downloads with a [restricted license](/launcher-toolkit/getting-started/starters/#license),
+for games integrated with EMAC Anti-Cheat. Retain their license notices.

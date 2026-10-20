@@ -1,0 +1,104 @@
+EMAC Anti-Cheat Launcher Pack Template License
+
+Copyright (c) 2026 EMAC LAB. All rights reserved.
+
+This license governs the launcher pack starters that EMAC LAB makes available in
+the releases of emaclab/launcher-toolkit (the "Template"). The Template
+includes its pack source, templates, stylesheets, translations, sample data,
+images, icons, workflow files and documentation, except third-party material.
+
+The Template is not open-source software. This license is not an open-source
+license. No part of the Template is licensed under the MIT License, the Apache
+License or any other open-source license.
+
+1. Definitions
+
+   "EMAC Anti-Cheat" means the anti-cheat product of EMAC LAB.
+
+   "Integrated Game" means a game that is integrated with EMAC Anti-Cheat, for
+   as long as that integration is in effect.
+
+   "Permitted Purpose" means creating, customizing, previewing, validating and
+   building launcher packs for an Integrated Game, and distributing those packs
+   to the players of that Integrated Game through its launcher.
+
+   "Derivative Repository" means a source repository, public or private, that is
+   created from the Template or that contains a copy of any part of the Template,
+   modified or not.
+
+   "You" means the person or organization that exercises rights under this
+   license.
+
+2. License grant
+
+   Subject to the terms of this license, EMAC LAB grants You a non-exclusive,
+   non-transferable, royalty-free, worldwide license to use, copy and modify the
+   Template, and to create derivative works of it, only for the Permitted
+   Purpose. Within the Permitted Purpose, You may:
+
+   a. create and maintain Derivative Repositories, public or private, for an
+      Integrated Game;
+   b. give your employees and contractors access to those repositories so that
+      they work on the Integrated Game's launcher packs;
+   c. distribute packs built from those repositories to the players of the
+      Integrated Game as part of its launcher.
+
+3. Conditions
+
+   a. Every Derivative Repository must keep this license, including the
+      copyright notice above, in a file named LICENSE at its root.
+   b. Every Derivative Repository and every derivative work of the Template
+      remain subject to this license and to the Permitted Purpose, whether the
+      repository is public or private. Making a repository public grants no one
+      any right in the Template beyond this license.
+   c. Material that You create and add to a Derivative Repository belongs to You
+      or to its licensors. This license applies to the parts of that repository
+      that come from the Template.
+
+4. Prohibited uses
+
+   You may not:
+
+   a. use, copy, modify or distribute the Template, or any derivative work of
+      it, for a game that is not an Integrated Game or for any purpose other
+      than the Permitted Purpose;
+   b. distribute the Template, or any derivative work of it, except as allowed
+      in section 2;
+   c. sell, rent, lease or sublicense the Template;
+   d. state or imply that the Template is open-source software, or offer it
+      under any other license terms;
+   e. remove or alter this license or the copyright notice.
+
+5. Third-party material
+
+   Third-party material that the Template includes or uses, such as the GitHub
+   Actions referenced by its workflow, remains subject to its own license terms.
+   This license grants no right in third-party material.
+
+6. Other EMAC LAB products and trademarks
+
+   This license grants no right to EMAC Anti-Cheat, the launcher core, the pack
+   tools, the publishing service or any other EMAC LAB product or service. Those
+   are governed by their own terms. This license grants no right to use the
+   names, logos or trademarks of EMAC LAB, except to state accurately that a
+   game is protected by EMAC Anti-Cheat.
+
+7. Termination
+
+   This license terminates automatically if You breach any of its terms. Your
+   rights for a game end when that game is no longer an Integrated Game. When
+   your rights end, You must stop using and distributing the Template and its
+   derivative works for the affected game.
+
+8. No warranty
+
+   THE TEMPLATE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+9. Limitation of liability
+
+   IN NO EVENT SHALL EMAC LAB BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE TEMPLATE OR THE USE OR OTHER DEALINGS IN THE
+   TEMPLATE.
