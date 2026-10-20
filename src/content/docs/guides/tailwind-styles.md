@@ -40,6 +40,11 @@ If it is not cached and the download fails, the command reports the problem rath
 that stale CSS is current. Retry with network access. Packs without `styles/input.css` do not
 need this download.
 
+The included [project CI](../ci/) restores this managed compiler cache only when
+`pack/styles/input.css` exists. It uses the exact toolkit release and checksum as the cache identity;
+the CLI still checks the compiler's pinned hash before every execution. Only successful
+default-branch pushes save the cache. Plain-CSS projects skip both compiler acquisition and caching.
+
 ### CSS-only configuration
 
 JavaScript configuration and plugins (`@config` and `@plugin`) are not supported.

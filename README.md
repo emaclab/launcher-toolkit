@@ -72,9 +72,34 @@ npm run dev
 npm run build
 ```
 
+The Pages workflow builds changes to `src/`, `public/`, the Astro configuration, package files,
+TypeScript configuration, npm configuration, and the workflow itself. Pull requests only build;
+`main` deploys. Dependency downloads are cached by Node major, runner OS/architecture, and lockfile,
+with cache saves limited to successful builds from `main`. Every run still uses `npm ci` and builds
+the site.
+
+The missing-page response lives in `src/pages/404.astro`, using Starlight's layout and search.
+Keep Starlight's injected 404 route disabled and do not add `src/content/docs/404.md`, which would
+also create a catch-all documentation route for the same URL.
+
 Open `http://localhost:4321/launcher-toolkit/`. Keep public guides focused on authoring commands,
 pack files, and usable examples. Do not add implementation sources, administrative instructions,
 private repository references, or credentials.
+
+### Dependency security override
+
+The site pins `postcss-selector-parser` **7.1.6** only beneath
+`@expressive-code/core@0.44.2` → `postcss-nested@6.2.0` to address
+[GHSA-rj75-hqrm-r3gf](https://github.com/advisories/GHSA-rj75-hqrm-r3gf).
+The current Starlight/Expressive Code releases still request parser 6 through that dependency.
+Parser 7 retains the synchronous parsing, cloning, replacement, and combinator APIs used here,
+has the same Node.js minimum and dependencies, and is already used by
+[postcss-nested 7 with the same interpolation code](https://github.com/postcss/postcss-nested/blob/7.0.0/index.js).
+Its [major-version iterator change](https://github.com/postcss/postcss-selector-parser/commit/4fa6e860a176985e03fda969b2b435fe168f31c2)
+does not change this consumer's same-node replacements; its prepends occur after traversal.
+Reassess this scoped override when updating Expressive Code, and remove it once the upstream
+dependency range accepts a patched parser. Keep `npm audit` enabled and verify the site build
+after dependency changes.
 
 ## Optional Tailwind notice
 

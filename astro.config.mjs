@@ -10,6 +10,8 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Launcher Toolkit',
+			// src/pages/404.astro owns this route without a duplicate docs collection entry.
+			disable404Route: true,
 			description:
 				'Guides and examples for creating, previewing, checking and building launcher packs with the toolkit and pack template.',
 			social: [

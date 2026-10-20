@@ -6,9 +6,9 @@ sidebar:
 ---
 
 Both starters include `.github/workflows/pack.yml` and `.toolkit-version`.
-The workflow reads the committed version file, downloads the matching Windows toolkit executable,
-verifies its checksum, and runs `launcher-toolkit build`. No repository version variable or
-extra secret is required.
+The workflow reads the committed version file, obtains the matching Windows toolkit executable
+from its release or cache, verifies its checksum, and runs `launcher-toolkit build`.
+No repository version variable or extra secret is required.
 
 ## Enable it
 
@@ -19,6 +19,8 @@ if GitHub asks you to enable them.
 The workflow runs on pushes and pull requests using `windows-2025`.
 It checks the complete pack before generating the build. Errors fail the job; warnings remain
 visible in the log.
+New commits cancel older runs for the same branch or pull request. All pushes and pull requests
+still run the build, so a documentation-only change does not leave an optional required check pending.
 
 ## Read the result
 
@@ -32,6 +34,24 @@ gh run list --workflow pack.yml --limit 5
 gh run view <run-id> --log
 gh run download <run-id> --name pack-<commit sha> --dir dist-ci
 ```
+
+## Safe tool caches
+
+The workflow fetches `SHA256SUMS` from the pinned public release on every run and verifies the
+executable before adding it to `PATH`, including on a cache hit. Toolkit cache keys include the
+release tag, expected SHA-256, Windows runner OS, and architecture. Changing `.toolkit-version`
+selects the new release without reusing a different executable.
+
+Only successful pushes to the repository's default branch save reusable tool caches. Pull requests
+and other branches may restore them, but do not save new entries. Caches contain public tool bytes,
+not pack files, build output, credentials, or signing data.
+
+If `pack/styles/input.css` exists, CI also restores the toolkit's managed Tailwind cache. Its key
+uses the same exact toolkit identity, and the toolkit verifies the compiler before every execution.
+Plain-CSS projects skip this cache and never download Tailwind. See
+[optional Tailwind](../tailwind-styles/).
+
+Cache reuse never skips the complete pack checks or build.
 
 ## Fix a failed run
 

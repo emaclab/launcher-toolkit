@@ -18,5 +18,12 @@
     "@astrojs/starlight": "0.42.6",
     "astro": "7.4.1",
     "sharp": "0.35.5"
+  },
+  "overrides": {
+    "@expressive-code/core@0.44.2": {
+      "postcss-nested@6.2.0": {
+        "postcss-selector-parser": "7.1.6"
+      }
+    }
   }
 }
