@@ -101,6 +101,15 @@ Reassess this scoped override when updating Expressive Code, and remove it once 
 dependency range accepts a patched parser. Keep `npm audit` enabled and verify the site build
 after dependency changes.
 
+### Upstream Pages deployment warning
+
+The official `actions/deploy-pages@v5.0.1` action can emit Node.js `DEP0040` for its bundled
+`punycode` dependency even when deployment succeeds. This is tracked in
+[actions/deploy-pages#434](https://github.com/actions/deploy-pages/issues/434).
+It is separate from the site build, which must remain warning-free. Keep the official action
+pinned, do not suppress Node.js warnings or downgrade its runtime, and update the pin when an
+upstream release fixes the bundled dependency.
+
 ## Optional Tailwind notice
 
 The automatically acquired standalone Tailwind CSS CLI retains the MIT License:
