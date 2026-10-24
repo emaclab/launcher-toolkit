@@ -1,0 +1,12 @@
+{#- Splash window (window.json splash.template), shown while the game starts. It accepts no
+    actions; in core API 3 it reads launcher.phase (launching, then launched). The core paints
+    the EMAC LAB mark into the anticheat-mark box: at least 120 x 24 px, entirely inside the
+    window. Do not ship the mark image in the pack. -#}
+<main class="splash" lang="{{ lang }}">
+  <h1 class="splash-title">{{ game.name }}</h1>
+  <p class="splash-status">{{ t("phase." ~ launcher.phase) }}</p>
+  <div class="splash-protection">
+    <span>{{ t("protectedBy") }}</span>
+    <div class="splash-mark" data-widget="anticheat-mark"></div>
+  </div>
+</main>
