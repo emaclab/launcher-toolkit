@@ -1,0 +1,51 @@
+{
+  "servers": {
+    "updated_at": "2026-10-19T18:30:00Z",
+    "servers": [
+      {
+        "id": "sa-east",
+        "name": { "pt": "América do Sul", "en": "South America", "es": "Sudamérica" },
+        "state": "online",
+        "players": 2105,
+        "capacity": 3000
+      },
+      {
+        "id": "na-east",
+        "name": { "pt": "América do Norte", "en": "North America", "es": "Norteamérica" },
+        "state": "online",
+        "players": 2988,
+        "capacity": 3000
+      },
+      {
+        "id": "eu-west",
+        "name": { "pt": "Europa", "en": "Europe", "es": "Europa" },
+        "state": "online",
+        "players": 1460,
+        "capacity": 3000
+      },
+      {
+        "id": "test",
+        "name": { "pt": "Servidor de testes", "en": "Test server", "es": "Servidor de pruebas" },
+        "state": "maintenance",
+        "message": {
+          "pt": "Abre amanhã às 12h (UTC).",
+          "en": "Opens tomorrow at 12 PM (UTC).",
+          "es": "Abre mañana a las 12 h (UTC)."
+        }
+      }
+    ]
+  },
+  "events": {
+    "featured": "season-2",
+    "details": {
+      "season-2": {
+        "description": {
+          "pt": "O mapa **Fronteira** e as recompensas da nova temporada ficam disponíveis.",
+          "en": "The **Frontier** map and the new season rewards become available.",
+          "es": "El mapa **Frontera** y las recompensas de la nueva temporada quedan disponibles."
+        },
+        "url": "https://example.com/season-2"
+      }
+    }
+  }
+}

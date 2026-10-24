@@ -57,7 +57,7 @@ The panel reports when a scenario does not apply to the current phase.
 The preview evaluates launcher requests using the displayed anti-cheat status, including a panel
 override. **Play** needs both the phase and `anticheat.status` to be `ready`; that status stands
 in for the real launcher's handshake. Keep the pack's **Play** button disabled until both are
-ready, as in the starters.
+ready, as in the starter.
 
 ## The launcher fields
 

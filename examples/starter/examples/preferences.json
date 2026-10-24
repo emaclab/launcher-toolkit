@@ -1,0 +1,14 @@
+{
+  "language": "pt",
+  "installed_version": 5,
+  "state": {
+    "accent": "green",
+    "article_size": 16,
+    "badges": true,
+    "density": "compact",
+    "launch_details": true,
+    "motion": false,
+    "read": ["season-2", "welcome"],
+    "screenshots_dir": "C:\\Users\\Player\\Pictures\\Example Game"
+  }
+}

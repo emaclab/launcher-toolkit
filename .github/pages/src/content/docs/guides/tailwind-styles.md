@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-Both starters use `pack/styles/app.css` directly. Editing that file is enough to customize colors,
+The starter uses `pack/styles/app.css` directly. Editing that file is enough to customize colors,
 fonts, spacing, and layout. **No compiler is needed for plain CSS.**
 
 The toolkit consumes the stylesheets listed in `pack.json` `styles` exactly as they are in the pack.

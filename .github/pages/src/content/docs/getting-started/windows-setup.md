@@ -62,7 +62,7 @@ Do not create filenames that differ only in letter case.
 
 ## Styles
 
-Both starters use plain `styles/app.css`. The toolkit uses the CSS files listed in `pack.json` as
+The starter uses plain `styles/app.css`. The toolkit uses the CSS files listed in `pack.json` as
 they are: it does not install, download, or run a CSS compiler. If you choose Tailwind CSS or
 another preprocessor, install and run it yourself, keep its input outside `pack/`, and commit the
 generated CSS. See [styles and optional Tailwind](../../guides/tailwind-styles/).

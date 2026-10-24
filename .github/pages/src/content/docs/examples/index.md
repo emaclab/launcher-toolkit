@@ -1,6 +1,6 @@
 ---
 title: Examples overview
-description: Complete, adaptable launcher examples - a runnable minimal pack and page-sized compositions of widgets, state, and actions.
+description: Complete, adaptable launcher examples - one runnable starter with every widget and page-sized compositions.
 sidebar:
   order: 0
 ---
@@ -11,7 +11,7 @@ The examples are complete enough to paste into a pack and adapt. Each one lists 
 
 | Example | Shows |
 | --- | --- |
-| [Minimal pack](minimal-pack/) | A complete project in this repository, with the same files as the minimal starter, that passes `launcher-toolkit check` and `build`: title bar, navigation, news with Markdown, settings, launch bar, toast, confirm dialog, tooltip, and splash. |
+| [Starter pack](starter-pack/) | The complete starter project with every widget, seven pages, Portuguese/English/Spanish translations, settings, launch bar, and splash. |
 
 ## Page compositions
 

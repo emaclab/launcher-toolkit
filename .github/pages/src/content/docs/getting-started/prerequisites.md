@@ -33,7 +33,7 @@ a separate Studio executable, or a CSS compiler.
 The first `init` needs internet access to obtain its starter from the toolkit release, and
 `update` downloads the executable of the requested release. Both check the release metadata on
 GitHub each time; a verified cached starter is reused without downloading it again.
-The starters use plain CSS, and the toolkit never downloads a CSS compiler.
+The starter uses plain CSS, and the toolkit never downloads a CSS compiler.
 
 No authentication is required for the public toolkit or starter downloads.
 You need your own GitHub account/repository only if you choose to store the project there and run CI.

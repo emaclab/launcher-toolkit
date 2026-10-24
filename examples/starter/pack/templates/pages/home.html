@@ -1,0 +1,98 @@
+{#- Start page (first entry of pack.json pages). The scroll widget snaps between the top
+    (carousel and quick cards) and the details below, and writes the offset into home_scroll,
+    which fades the slide art and pauses the carousel. -#}
+{%- set links = game.links or {} -%}
+{%- set slides = data.slides -%}
+{%- set index = state.slide if state.slide < slides|length else 0 -%}
+{%- set current = slides[index] -%}
+{%- set newest = data.releases.releases|first -%}
+{%- set featured = data.calendar.events|selectattr("id", "eq", data.events.featured)|first -%}
+{%- set online = data.servers.servers|selectattr("state", "eq", "online")|list|length -%}
+<div id="home-scroll" class="home-scroll" data-widget="scroll" data-scroll-state="home_scroll" data-snap="start, .home-details, end" data-snap-offset="20" data-snap-delay="180">
+  {%- if current %}
+  {%- set link = current.link or {} %}
+  <section class="carousel" role="region" aria-roledescription="carousel" aria-label="{{ t('highlights') }}" data-widget="carousel" data-state="slide" data-count="{{ slides|length }}" data-interval="7000" data-elapsed-state="slide_elapsed" data-paused="{{ state.home_scroll >= 200 or not state.motion }}">
+    <img class="slide-art" src="{{ asset(current.image) }}" alt="" width="1056" height="236" draggable="false" style="opacity:{{ [1 - state.home_scroll / 500, 0.35]|max|num }}">
+    {#- data-key replays the enter animation on every slide and language change. -#}
+    <div class="slide-story" data-key="{{ index }}-{{ lang }}">
+      <span class="category">{{ t(current.category) }}</span>
+      <h1>{{ current.title|loc }}</h1>
+      <p>{{ current.text|loc }}</p>
+      <button class="slide-cta"
+        {%- if link.page == "news" and link.article %} data-on-click="set('article', {{ link.article|arg }}); set('read', {{ link.article|arg }}, true); navigate('news')"
+        {%- elif link.page == "calendar" and link.event %} data-on-click="navigate('calendar'); set('event', {{ link.event|arg }})"
+        {%- elif link.page %} data-on-click="navigate({{ link.page|arg }})"{% endif %}>{{ t("learnMore") }} →</button>
+    </div>
+    <div class="carousel-tabs" role="group" aria-label="{{ t('highlights') }}">
+      {%- for slide in slides %}
+      <button class="carousel-tab" aria-label="{{ slide.title|loc }}" aria-pressed="{{ loop.index0 == index }}" data-on-click="set('slide', {{ loop.index0|arg }})">
+        <span class="carousel-track"><span style="width:{{ ([state.slide_elapsed / 70, 4]|max if loop.index0 == index else 0)|num }}%"></span></span>
+        <span class="carousel-label">{{ slide.title|loc }}</span>
+      </button>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+  <div class="quick-cards">
+    {%- if featured %}
+    <button class="quick-card" data-key="card-event" data-on-click="navigate('calendar'); set('event', {{ featured.id|arg }})">
+      <span class="quick-label">{{ t("nextEvent") }}</span>
+      <strong>{{ featured.name|loc }}</strong>
+      {%- if data.calendar.countdown %}
+      {%- set clock = countdown(data.calendar.countdown.begins, data.calendar.countdown.ends) %}
+      <span class="quick-value" data-widget="countdown" data-refresh="30000">
+        {%- if clock.status == "upcoming" %}{{ clock.days }}d {{ clock.hours }}h {{ clock.minutes }}m{% else %}{{ t("countdown." ~ clock.status) }}{% endif -%}
+      </span>
+      {%- endif %}
+    </button>
+    {%- endif %}
+    <button class="quick-card" data-key="card-servers" data-on-click="navigate('servers')">
+      <span class="quick-label">{{ t("servers") }}</span>
+      <strong>{{ online }} / {{ data.servers.servers|length }} {{ t("online") }}</strong>
+      <span class="quick-value">{{ t("serversDetails") }}</span>
+    </button>
+    {%- if newest %}
+    <button class="quick-card" data-key="card-version" data-on-click="navigate('updates')">
+      <span class="quick-label">{{ t("latestVersion") }}</span>
+      <strong>{{ t("version") }} {{ newest.version }}</strong>
+      <span class="quick-value">{{ newest.date|date("long") }}</span>
+    </button>
+    {%- endif %}
+  </div>
+  <button class="scroll-hint" data-on-click="scroll_to('#home-scroll', '.home-details')">{{ t("more") }} ↓</button>
+  <div class="home-details">
+    <div class="home-grid">
+      <section class="card" aria-labelledby="latest-heading">
+        <h2 id="latest-heading">{{ t("latestNews") }}</h2>
+        <div class="latest" data-widget="list">
+          {%- for item in data.news[:3] %}
+          <button class="latest-row" data-key="{{ item.id }}" data-on-click="set('article', {{ item.id|arg }}); set('read', {{ item.id|arg }}, true); navigate('news')">
+            <span class="category">{{ t(item.category) }}</span>
+            <strong>{{ item.title|loc }}</strong>
+            <time datetime="{{ item.date }}">{{ item.date|date("short") }}</time>
+            {%- if item.id not in state.read %}<i class="unread-dot" aria-label="{{ t('unread') }}"></i>{% endif %}
+          </button>
+          {%- else %}
+          <p class="empty">{{ t("noNews") }}</p>
+          {%- endfor %}
+        </div>
+      </section>
+      <section class="card" aria-labelledby="links-heading">
+        <h2 id="links-heading">{{ t("links") }}</h2>
+        <div class="links">
+          {%- for key in ["website", "community", "support"] if links[key] %}
+          <button class="link-button" data-on-click="open_url({{ links[key]|arg }})">{{ t("link." ~ key) }} ↗</button>
+          {%- endfor %}
+        </div>
+      </section>
+    </div>
+    <section class="card fair-play-banner">
+      <div>
+        <h2>{{ t("fairPlayTitle") }}</h2>
+        <p>{{ t("fairPlayText") }}</p>
+      </div>
+      <button class="link-button" data-on-click="navigate('about')">{{ t("about") }} →</button>
+    </section>
+    <button class="back-top" data-on-click="scroll_to('#home-scroll', 'start')">{{ t("backTop") }} ↑</button>
+  </div>
+</div>

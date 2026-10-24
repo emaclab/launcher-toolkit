@@ -1,0 +1,2 @@
+# Packs are zipped, hashed and signed byte for byte: never convert line endings on checkout.
+* -text

@@ -1,0 +1,51 @@
+{
+  "featured": "launch-week",
+  "details": {
+    "launch-week": {
+      "description": {
+        "pt": "Sete dias de desafios diários e **o dobro de experiência** em todas as partidas.\n\n- Um desafio novo por dia.\n- Recompensa especial para quem completar os sete.",
+        "en": "Seven days of daily challenges and **double experience** in every match.\n\n- A new challenge every day.\n- A special reward for completing all seven.",
+        "es": "Siete días de desafíos diarios y **el doble de experiencia** en cada partida.\n\n- Un desafío nuevo cada día.\n- Una recompensa especial por completar los siete."
+      },
+      "url": "https://example.com/events/launch-week"
+    },
+    "double-xp": {
+      "description": {
+        "pt": "Todas as partidas dão o dobro de experiência durante o fim de semana.",
+        "en": "Every match gives double experience during the weekend.",
+        "es": "Todas las partidas dan el doble de experiencia durante el fin de semana."
+      }
+    },
+    "season-2": {
+      "description": {
+        "pt": "O mapa **Fronteira** e as recompensas da nova temporada ficam disponíveis.",
+        "en": "The **Frontier** map and the new season rewards become available.",
+        "es": "El mapa **Frontera** y las recompensas de la nueva temporada quedan disponibles."
+      },
+      "url": "https://example.com/season-2"
+    },
+    "weekly-cup": {
+      "description": {
+        "pt": "Torneio aberto em equipes de três. As inscrições fecham uma hora antes.",
+        "en": "An open tournament for teams of three. Sign-up closes one hour before.",
+        "es": "Torneo abierto por equipos de tres. Las inscripciones cierran una hora antes."
+      },
+      "url": "https://example.com/community"
+    },
+    "maintenance": {
+      "description": {
+        "pt": "Os servidores podem ficar indisponíveis. Veja o estado atual na página **Servidores**.",
+        "en": "The servers can be unavailable. See the current status on the **Servers** page.",
+        "es": "Los servidores pueden no estar disponibles. Consulta el estado actual en la página **Servidores**."
+      }
+    },
+    "community-night": {
+      "description": {
+        "pt": "Partidas abertas com a equipe de desenvolvimento. As vagas são limitadas.",
+        "en": "Open matches with the development team. Places are limited.",
+        "es": "Partidas abiertas con el equipo de desarrollo. Las plazas son limitadas."
+      },
+      "url": "https://example.com/community"
+    }
+  }
+}

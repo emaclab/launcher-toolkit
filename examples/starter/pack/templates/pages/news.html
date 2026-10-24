@@ -1,0 +1,50 @@
+{#- News: search, category chips, the article list and the selected article (state.article, or
+    the newest one). fold() makes the search ignore case and accents. Article bodies are Markdown
+    from data/news.json, expanded by the markdown widget at the "article_size" setting. -#}
+{%- set selected = data.news|selectattr("id", "eq", state.article)|first or data.news|first -%}
+{%- set q = fold(state.query|trim) -%}
+{%- set categories = data.news|map(attribute="category")|unique|list -%}
+<div class="news">
+  <div class="news-side">
+    <div class="search-box">
+      <input id="news-search" class="search" type="text" value="{{ state.query }}" aria-label="{{ t('searchNews') }}" data-on-input="set('query', $value)" data-on-key-escape="set('query', '')">
+      {%- if not state.query %}<span class="search-hint" data-key="search-hint">{{ t("searchNews") }}</span>{% endif %}
+    </div>
+    <div class="chips" role="group" aria-label="{{ t('filterCategory') }}">
+      {%- for category in categories %}
+      {%- set on = category in state.news_filter %}
+      <button class="{{ 'chip on' if on else 'chip' }}" aria-pressed="{{ on }}" data-on-click="toggle('news_filter', {{ category|arg }})">{{ t(category) }}</button>
+      {%- endfor %}
+    </div>
+    <div class="news-list" data-widget="list">
+      {%- for item in data.news if (not q or q in fold(item.title|loc) or q in fold(item.body|loc)) and (not state.news_filter or item.category in state.news_filter) %}
+      <button class="{{ 'news-row selected' if selected and item.id == selected.id else 'news-row' }}" aria-pressed="{{ selected and item.id == selected.id }}" data-key="{{ item.id }}" data-on-click="set('article', {{ item.id|arg }}); set('read', {{ item.id|arg }}, true)">
+        <span class="category">{{ t(item.category) }}</span>
+        <strong>{{ item.title|loc }}</strong>
+        <time datetime="{{ item.date }}">{{ item.date|date("short") }}</time>
+        {%- if item.id not in state.read %}<i class="unread-dot" aria-label="{{ t('unread') }}"></i>{% endif %}
+      </button>
+      {%- else %}
+      <div class="no-results" data-key="no-results">
+        <p class="empty">{{ t("noResults") }}</p>
+        <button class="link-button" data-on-click="set('query', ''); set('news_filter', null); focus('#news-search')">{{ t("clearSearch") }}</button>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- if selected %}
+  <article class="article" data-key="article-{{ selected.id }}">
+    <div class="article-heading">
+      <span class="category">{{ t(selected.category) }}</span>
+      {%- if selected.id in state.read %}
+      <button class="text-button" data-on-click="set('read', {{ selected.id|arg }}, false)">{{ t("markUnread") }}</button>
+      {%- endif %}
+    </div>
+    <h1>{{ selected.title|loc }}</h1>
+    <time datetime="{{ selected.date }}">{{ selected.date|date("long") }}</time>
+    <div class="article-body" style="font-size:{{ state.article_size|num }}px" data-widget="markdown" data-source="{{ selected.body|loc }}"></div>
+  </article>
+  {%- else %}
+  <p class="empty">{{ t("noNews") }}</p>
+  {%- endif %}
+</div>

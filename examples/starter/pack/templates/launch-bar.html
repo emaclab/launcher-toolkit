@@ -1,0 +1,86 @@
+{#- Bottom bar of the main window: anti-cheat status, update progress and the launch actions
+    (core API 3). `launcher` is the core's update and launch state and `anticheat` its anti-cheat
+    status and last error. Each action is rendered only in the state where the core accepts it;
+    force_close() asks first (dialogs.html), and the download details follow the
+    "launch_details" setting. -#}
+{%- set phase = launcher.phase -%}
+{#- A failed check stays in `checking` with launcher.check_failed until retry() or repair(). -#}
+{%- set failed = launcher.check_failed -%}
+{%- set busy = phase in ["checking", "verifying", "launching"] and not failed -%}
+{%- set transfer = phase in ["downloading", "blocked"] -%}
+{%- set full = failed or phase in ["ready", "launched", "launch_failed"] -%}
+{#- retry(): a failed check, held files, a failed launch or an anti-cheat error in ready. -#}
+{%- set retry = failed or phase in ["blocked", "launch_failed"] or (phase == "ready" and anticheat.status == "error") -%}
+{%- set label = t("checkFailed") if failed else t("phase." ~ phase) -%}
+{%- set left = duration(launcher.eta) -%}
+<footer class="launch-bar" data-phase="{{ phase }}" data-failed="{{ failed }}">
+  <div class="tip-anchor">
+    <button class="protection" aria-describedby="tip-protection" data-widget="tooltip" data-state="tip" data-value="protection">
+      <span class="protection-dot" data-status="{{ anticheat.status }}"></span>
+      <span class="protection-text">
+        <span class="protection-label">{{ t("antiCheat") }}</span>
+        <strong>{{ t("anticheat." ~ anticheat.status) }}</strong>
+      </span>
+    </button>
+    {%- if state.tip == "protection" %}
+    <span id="tip-protection" class="tooltip tooltip-up" role="tooltip" data-key="tip-protection">
+      {{- t("anticheatTip." ~ anticheat.status) }}{% if anticheat.simulated %} {{ t("anticheatSimulated") }}{% endif -%}
+    </span>
+    {%- endif %}
+  </div>
+  <div class="progress-area">
+    <div class="progress-heading">
+      <span class="phase-label">{{ label }}</span>
+      {%- if transfer %}<span class="progress-value">{{ launcher.progress|int }}%</span>{% endif %}
+    </div>
+    {#- The indeterminate runner is a different element than the bar, so the morph replaces it
+        and no animated value stays on the bar when the phase changes. -#}
+    <div class="progress" role="progressbar" aria-label="{{ label }}" aria-valuemin="0" aria-valuemax="100"
+      {%- if not busy %} aria-valuenow="{{ (100 if full else launcher.progress)|int }}"{% endif %}>
+      {%- if busy %}<i class="progress-runner"></i>{% else %}<span style="width:{{ (100 if full else launcher.progress)|num }}%"></span>{% endif -%}
+    </div>
+    <div class="progress-detail">
+      {%- if anticheat.message %}
+      {#- The last anti-cheat error, until retry() clears it. -#}
+      <span class="detail-alert" data-key="alert"><strong>{{ anticheat.message.title }}</strong> {{ anticheat.message.message }}</span>
+      {%- elif phase == "blocked" %}
+      <span>{{ t("heldBy") }}</span>
+      {%- for process in launcher.blocked.processes %}
+      <span class="held" data-key="pid-{{ process.pid }}">{{ process.name }} ({{ process.pid }})</span>
+      {%- endfor %}
+      {%- elif failed %}
+      <span>{{ t("checkFailedHint") }}</span>
+      {%- else %}
+      {%- if state.launch_details and phase == "downloading" %}
+      {%- if launcher.total is not none %}
+      <span>{{ bytes(launcher.downloaded) }} / {{ bytes(launcher.total) }}</span>
+      {%- endif %}
+      {%- if launcher.speed is not none %}
+      <span>{{ bytes(launcher.speed) }}/s</span>
+      {%- endif %}
+      {%- if left %}
+      <span>{{ t("timeLeft") }} {{ left.hours }}h {{ left.minutes }}m {{ left.seconds }}s</span>
+      {%- endif %}
+      {%- endif %}
+      {%- if phase == "ready" %}
+      <span>{{ t("version") }} {{ launcher.client_version }}</span>
+      {%- endif %}
+      {%- endif %}
+    </div>
+  </div>
+  <div class="launch-actions">
+    {%- if phase == "blocked" %}
+    <button id="force-close" class="secondary" data-on-click="set('confirm', 'force_close')">{{ t("forceClose") }}</button>
+    {%- elif failed or phase == "launch_failed" %}
+    <button class="secondary" data-key="repair" data-on-click="repair()">{{ t("repair") }}</button>
+    {%- elif phase == "ready" %}
+    <button class="secondary" data-key="check" data-on-click="check()">{{ t("checkUpdates") }}</button>
+    {%- endif %}
+    {%- if retry %}
+    <button id="launch-primary" class="play" data-on-click="retry()">{{ t("retry") }}</button>
+    {%- else %}
+    {#- Play needs the ready phase and a ready anti-cheat handshake. -#}
+    <button id="launch-primary" class="play"{% if phase != "ready" or anticheat.status != "ready" %} disabled{% endif %} data-on-click="play()">{{ t("play") }}</button>
+    {%- endif %}
+  </div>
+</footer>

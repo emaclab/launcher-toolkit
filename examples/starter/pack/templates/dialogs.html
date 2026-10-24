@@ -1,0 +1,70 @@
+{#- Modal dialogs, rendered last so that they cover the whole window. Each one renders from state
+    with its own data-key; the modal widget traps focus, closes on Escape and on a backdrop click,
+    and returns focus to the opener. Confirmations put autofocus on the safe choice, include the
+    launcher phase in their condition when they confirm a launcher action, and the confirming
+    button runs the real actions itself. -#}
+{%- if state.confirm == "force_close" and launcher.phase == "blocked" %}
+<div class="overlay" data-key="confirm-force-close" data-widget="modal" data-on-close="set('confirm', '')" data-return-focus="#launch-primary">
+  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirm-close-title" aria-describedby="confirm-close-text">
+    <h2 id="confirm-close-title">{{ t("forceCloseTitle") }}</h2>
+    <p id="confirm-close-text">{{ t("forceCloseText") }}</p>
+    {#- launcher.blocked.processes: the programs force_close() ends, never the launcher. -#}
+    <ul class="dialog-processes">
+      {%- for process in launcher.blocked.processes %}
+      <li data-key="pid-{{ process.pid }}"><strong>{{ process.name }}</strong> <span>PID {{ process.pid }}</span></li>
+      {%- endfor %}
+    </ul>
+    <div class="dialog-actions">
+      <button class="dialog-button" autofocus data-on-click="set('confirm', '')">{{ t("keepOpen") }}</button>
+      <button class="dialog-button danger" data-on-click="force_close(); set('confirm', '')">{{ t("forceCloseConfirm") }}</button>
+    </div>
+  </div>
+</div>
+{%- elif state.confirm == "reset_settings" and page == "settings" %}
+<div class="overlay" data-key="confirm-reset" data-widget="modal" data-on-close="set('confirm', '')" data-return-focus="#reset-settings">
+  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirm-reset-title" aria-describedby="confirm-reset-text">
+    <h2 id="confirm-reset-title">{{ t("resetTitle") }}</h2>
+    <p id="confirm-reset-text">{{ t("resetText") }}</p>
+    <div class="dialog-actions">
+      <button class="dialog-button" autofocus data-on-click="set('confirm', '')">{{ t("keepSettings") }}</button>
+      {#- null resets a variable to its pack.json default. -#}
+      <button class="dialog-button danger" data-on-click="set('accent', null); set('density', null); set('motion', null); set('badges', null); set('launch_details', null); set('article_size', null); set('screenshots_dir', null); set('confirm', '')">{{ t("resetConfirm") }}</button>
+    </div>
+  </div>
+</div>
+{%- endif %}
+{%- if page == "calendar" and state.event %}
+{%- set active = data.calendar.events|selectattr("id", "eq", state.event)|first %}
+{%- if active %}
+{#- data.calendar has a fixed schema, so the extra text of each event lives in data/events.json. -#}
+{%- set info = data.events.details[active.id] if active.id in data.events.details else none %}
+<div class="overlay" data-key="event-{{ active.id }}" data-widget="modal" data-on-close="set('event', '')" data-return-focus="#calendar-today">
+  <div class="dialog event-dialog" role="dialog" aria-modal="true" aria-labelledby="event-title">
+    <div class="dialog-heading">
+      <span class="event-color" style="background:{{ active.color }}"></span>
+      <h2 id="event-title">{{ active.name|loc }}</h2>
+      <button class="dialog-close" aria-label="{{ t('close') }}" autofocus data-on-click="set('event', '')">×</button>
+    </div>
+    <p class="event-when">
+      {%- if active.schedule %}{{ active.schedule|loc }}
+      {%- elif active.start == active.end %}{{ active.start|date("long") }}
+      {%- else %}{{ active.start|date("long") }} – {{ active.end|date("long") }}{% endif -%}
+    </p>
+    {%- if active.id == data.events.featured and data.calendar.countdown %}
+    {%- set clock = countdown(data.calendar.countdown.begins, data.calendar.countdown.ends) %}
+    <p class="event-clock" data-widget="countdown" data-refresh="30000">
+      {%- if clock.status == "upcoming" %}{{ t("startsIn") }} {{ clock.days }}d {{ clock.hours }}h {{ clock.minutes }}m{% else %}{{ t("countdown." ~ clock.status) }}{% endif -%}
+    </p>
+    {%- endif %}
+    {%- if info %}
+    <div class="dialog-body" data-widget="markdown" data-source="{{ info.description|loc }}"></div>
+    {%- endif %}
+    {%- if info and info.url %}
+    <div class="dialog-actions">
+      <button class="dialog-button" data-on-click="open_url({{ info.url|arg }})">{{ t("eventPage") }} ↗</button>
+    </div>
+    {%- endif %}
+  </div>
+</div>
+{%- endif %}
+{%- endif %}

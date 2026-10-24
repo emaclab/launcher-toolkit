@@ -73,5 +73,5 @@ Declare transient UI state (`lang_menu`, `tip`, `event`, scroll offsets) with `"
 | `dropdown` + `tooltip` + `modal` + `pick_folder` (settings) | [Settings page](../examples/settings-page/) |
 | `tooltip` + `modal` + launcher actions of core API 3 (bottom bar) | [Launch bar](../examples/launch-bar/) |
 | `list` + `markdown` + search with `fold()` (news) | [News reader](../examples/news-reader/) |
-| A complete runnable pack | [Minimal pack](../examples/minimal-pack/) |
+| A complete runnable pack with every widget | [Starter pack](../examples/starter-pack/) |
 

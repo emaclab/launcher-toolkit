@@ -11,7 +11,7 @@ images, and fonts. Use `launcher-toolkit.exe` to create and develop the project.
 ## Start a project
 
 1. [Download and install](../release-tools/) the Windows toolkit.
-2. Run `launcher-toolkit init my-game` and choose the minimal or complete starter.
+2. Run `launcher-toolkit init my-game` to create the complete example with every widget.
 3. Open the new project and run `launcher-toolkit dev`.
 4. Save your edits, then run `launcher-toolkit build`.
 
@@ -46,7 +46,7 @@ Open the executable without arguments to use the terminal menu. See
 | `.toolkit-version` | Toolkit release required by the project and its CI; change it explicitly when upgrading |
 
 Keep each pack complete. Do not depend on files in another branch or starter.
-Both starters use ordinary CSS; preprocessors are optional and run outside the toolkit.
+The starter uses ordinary CSS; preprocessors are optional and run outside the toolkit.
 
 ## Check presentation
 
@@ -64,7 +64,7 @@ See [restrictions](../../reference/restrictions/) for supported HTML, CSS, and r
 | Project | The folder with `.toolkit-version`, `LICENSE`, CI, and the `pack/` folder |
 | Source pack | The complete `pack/` folder you edit |
 | Built pack | ZIP or output folder created by `build` |
-| Core API | Pack feature level declared in `core_api`; the current core and both starters use `3` |
+| Core API | Pack feature level declared in `core_api`; the current core and starter use `3` |
 | State | Declared values used by templates, widgets, actions, and settings |
 | Widget | Behavior configured through `data-widget` and documented attributes |
 

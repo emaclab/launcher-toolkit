@@ -1,0 +1,62 @@
+{#- Server status from data/servers.json (fixed schema; the feed replaces it when pack.json
+    "feed" is set). age() gives the seconds since updated_at: null means "unknown", and data
+    older than 10 minutes shows a warning. The countdown widget re-renders every 30 s, so the
+    age advances between feed fetches. -#}
+{%- set s = data.servers -%}
+{%- set updated = age(s.updated_at) -%}
+{%- set unknown = updated is none -%}
+{%- set stale = not unknown and updated > 600 -%}
+{%- set online = s.servers|selectattr("state", "eq", "online")|list -%}
+{%- set players = online|selectattr("players", "number")|map(attribute="players")|sum -%}
+<div class="servers" data-widget="countdown" data-refresh="30000">
+  <div class="servers-summary">
+    <div class="summary-item">
+      <span class="quick-label">{{ t("serversOnline") }}</span>
+      <strong>{{ "—" if unknown else online|length ~ " / " ~ s.servers|length }}</strong>
+    </div>
+    <div class="summary-item">
+      <span class="quick-label">{{ t("playersOnline") }}</span>
+      <strong>{{ "—" if unknown else players }}</strong>
+    </div>
+    <div class="summary-item">
+      <span class="quick-label">{{ t("lastUpdate") }}</span>
+      <strong>
+        {%- if unknown %}{{ t("unknown") }}
+        {%- elif updated < 60 %}{{ t("justNow") }}
+        {%- elif updated < 3600 %}{{ updated // 60 }} min
+        {%- elif updated < 86400 %}{{ updated // 3600 }} h
+        {%- else %}{{ updated // 86400 }} d{% endif -%}
+      </strong>
+    </div>
+  </div>
+  {%- if unknown %}
+  <p class="notice" data-key="notice-unknown">{{ t("statusUnknown") }}</p>
+  {%- elif stale %}
+  <p class="notice" data-key="notice-stale">{{ t("statusStale") }}</p>
+  {%- endif %}
+  <div class="server-list">
+    {%- for srv in s.servers %}
+    {%- set status = "unknown" if unknown else srv.state %}
+    <div class="server-card" data-key="server-{{ srv.id }}" data-state="{{ status }}">
+      <div class="server-heading">
+        <span class="server-dot"></span>
+        <strong>{{ srv.name|loc }}</strong>
+        <span class="server-state">{{ t("server." ~ status) }}</span>
+      </div>
+      {%- if not unknown and srv.players is number and srv.capacity is number %}
+      <div class="server-load">
+        <div class="load-bar" role="progressbar" aria-label="{{ t('playersOnline') }}" aria-valuemin="0" aria-valuemax="{{ srv.capacity }}" aria-valuenow="{{ srv.players }}">
+          <span style="width:{{ [srv.players / srv.capacity * 100, 100]|min|num }}%"></span>
+        </div>
+        <span>{{ srv.players }} / {{ srv.capacity }}</span>
+      </div>
+      {%- endif %}
+      {%- if srv.message %}
+      <p class="server-message">{{ srv.message|loc }}</p>
+      {%- endif %}
+    </div>
+    {%- else %}
+    <p class="empty">{{ t("noServers") }}</p>
+    {%- endfor %}
+  </div>
+</div>

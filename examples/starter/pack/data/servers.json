@@ -1,0 +1,40 @@
+{
+  "updated_at": "2026-10-19T12:00:00Z",
+  "servers": [
+    {
+      "id": "sa-east",
+      "name": { "pt": "América do Sul", "en": "South America", "es": "Sudamérica" },
+      "state": "online",
+      "players": 1840,
+      "capacity": 3000
+    },
+    {
+      "id": "na-east",
+      "name": { "pt": "América do Norte", "en": "North America", "es": "Norteamérica" },
+      "state": "online",
+      "players": 2710,
+      "capacity": 3000
+    },
+    {
+      "id": "eu-west",
+      "name": { "pt": "Europa", "en": "Europe", "es": "Europa" },
+      "state": "maintenance",
+      "capacity": 3000,
+      "message": {
+        "pt": "Manutenção programada até 8h (UTC).",
+        "en": "Scheduled maintenance until 8 AM (UTC).",
+        "es": "Mantenimiento programado hasta las 8 h (UTC)."
+      }
+    },
+    {
+      "id": "test",
+      "name": { "pt": "Servidor de testes", "en": "Test server", "es": "Servidor de pruebas" },
+      "state": "offline",
+      "message": {
+        "pt": "Abre nas semanas antes de cada temporada.",
+        "en": "Opens in the weeks before each season.",
+        "es": "Abre en las semanas previas a cada temporada."
+      }
+    }
+  ]
+}

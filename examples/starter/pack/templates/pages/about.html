@@ -1,0 +1,63 @@
+{#- About: game facts and system requirements from pack.json game.info and game.requirements,
+    the fair-play notice and the FAQ (data/faq.json). The FAQ is an accordion: a set holds the
+    open answers, and closed answers are not rendered, so Tab never reaches them. The scroll
+    widget writes the offset into about_scroll, which shows the back-to-top button. -#}
+{%- set info = game.info or {} -%}
+{%- set requirements = game.requirements or {} -%}
+<div class="about-page">
+  <div id="about-scroll" class="about-scroll" data-widget="scroll" data-scroll-state="about_scroll">
+    <div class="about">
+      <section class="card about-game">
+        <h1>{{ game.name }}</h1>
+        <p>{{ t("aboutText") }}</p>
+        <div class="facts">
+          {%- for key in ["developer", "publisher", "release_date", "age_rating"] if info[key] %}
+          <div class="fact">
+            <span class="fact-label">{{ t("info." ~ key) }}</span>
+            <span class="fact-value">{{ info[key]|date("long") if key == "release_date" else info[key] }}</span>
+          </div>
+          {%- endfor %}
+        </div>
+      </section>
+      <section class="card fair-play">
+        <h2>{{ t("fairPlayTitle") }}</h2>
+        <p>{{ t("fairPlayText") }}</p>
+        <button class="link-button" data-on-click="scroll_to('#about-scroll', '#faq')">{{ t("faq") }} ↓</button>
+      </section>
+      <section class="card requirements" aria-labelledby="requirements-heading">
+        <h2 id="requirements-heading">{{ t("requirements") }}</h2>
+        <div class="requirement-columns">
+          {%- for tier in ["minimum", "recommended"] if requirements[tier] %}
+          <div class="requirement-column">
+            <h3>{{ t("requirements." ~ tier) }}</h3>
+            {%- for row in requirements[tier] %}
+            <div class="fact">
+              <span class="fact-label">{{ t("requirement." ~ row.label) }}</span>
+              <span class="fact-value">{{ row.value }}</span>
+            </div>
+            {%- endfor %}
+          </div>
+          {%- endfor %}
+        </div>
+      </section>
+      <section id="faq" class="card faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">{{ t("faq") }}</h2>
+        <div class="faq-list" data-widget="list">
+          {%- for item in data.faq %}
+          {%- set open = item.id in state.faq_open %}
+          <button class="{{ 'faq-question open' if open else 'faq-question' }}" data-key="faq-q-{{ item.id }}" aria-expanded="{{ open }}" aria-controls="faq-{{ item.id }}" data-on-click="toggle('faq_open', {{ item.id|arg }})">
+            <span>{{ item.question|loc }}</span>
+            <img src="{{ asset('images/caret.svg') }}" alt="" width="10" height="10" draggable="false">
+          </button>
+          {%- if open %}
+          <div id="faq-{{ item.id }}" class="faq-answer article-body" style="font-size:{{ state.article_size|num }}px" data-key="faq-a-{{ item.id }}" role="region" data-widget="markdown" data-source="{{ item.answer|loc }}"></div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </section>
+    </div>
+  </div>
+  {%- if state.about_scroll > 160 %}
+  <button class="back-top floating" data-key="about-top" data-on-click="scroll_to('#about-scroll', 'start')">{{ t("backTop") }} ↑</button>
+  {%- endif %}
+</div>

@@ -30,10 +30,9 @@ Open a new terminal before using the short command name.
 launcher-toolkit init my-game
 ```
 
-Answer the questions for the starter, the game name, and the game ID. Choose **minimal** for a
-small starting point or **complete** for the full set of example pages. Use your project's
-assigned values when you have them; keep the defaults for a local experiment. Type `cancel` at
-any question to stop without writing files.
+Answer the questions for the game name and game ID. The single starter includes every widget
+and all example pages. Use your project's assigned values when you have them; keep the defaults
+for a local experiment. Type `cancel` at any question to stop without writing files.
 
 The command downloads the starter of the installed toolkit version, verifies it, and creates the
 project. The target folder must be empty or absent, and its parent folder must exist. See
@@ -42,7 +41,7 @@ project. The target folder must be empty or absent, and its parent folder must e
 For automation, provide all choices explicitly:
 
 ```powershell
-launcher-toolkit init my-game --template minimal --name "My Game" --game-id my-game --non-interactive
+launcher-toolkit init my-game --name "My Game" --game-id my-game --non-interactive
 ```
 
 ## 3. Preview the pack
@@ -70,7 +69,7 @@ launcher-toolkit build
 `dist/pack.zip` and printing its JSON report. Errors stop the build; warnings are shown but do not
 stop it. Fix warnings too.
 
-Both starters use ordinary CSS, and the toolkit uses the CSS files in the pack as they are. If you
+The starter uses ordinary CSS, and the toolkit uses the CSS files in the pack as they are. If you
 generate CSS with a preprocessor, run it yourself before these commands; see
 [styles](../../guides/tailwind-styles/).
 

@@ -1,0 +1,58 @@
+{#- Main window root (window.json main.template). The core renders it again after every state
+    change and morphs the live window toward the new output. The data-accent, data-density and
+    data-motion attributes come from persisted settings (pages/settings.html); app.css styles them. -#}
+{%- set unread = data.news|rejectattr("id", "in", state.read)|list|length -%}
+{%- set article = data.news|selectattr("id", "eq", state.article)|first or data.news|first -%}
+<main class="app" lang="{{ lang }}" data-page="{{ page }}" data-accent="{{ state.accent }}" data-density="{{ state.density }}" data-motion="{{ state.motion }}">
+  <header class="titlebar">
+    <div class="titlebar-drag" data-on-mousedown="drag()"></div>
+    <div class="brand">
+      <img class="brand-logo" src="{{ asset('images/logo.svg') }}" alt="" width="28" height="28" draggable="false">
+      <span class="brand-name">{{ game.name }}</span>
+    </div>
+    <div class="window-controls">
+      <div class="language" data-widget="dropdown" data-open="{{ state.lang_menu }}" data-on-close="set('lang_menu', false)">
+        <button class="language-button" aria-label="{{ t('language') }}" aria-expanded="{{ state.lang_menu }}" data-on-click="toggle('lang_menu')">
+          <span>{{ lang|upper }}</span>
+          <img src="{{ asset('images/caret.svg') }}" alt="" width="10" height="10" draggable="false">
+        </button>
+        {%- if state.lang_menu %}
+        <div class="language-menu" role="group" aria-label="{{ t('language') }}">
+          {%- for l in languages %}
+          <button class="{{ 'language-option chosen' if l.code == lang else 'language-option' }}" aria-pressed="{{ l.code == lang }}" data-on-click="set_language({{ l.code|arg }}); set('lang_menu', false)">{{ l.name }}</button>
+          {%- endfor %}
+        </div>
+        {%- endif %}
+      </div>
+      <button class="window-button" aria-label="{{ t('minimize') }}" data-on-click="minimize()">
+        <img src="{{ asset('images/minimize.svg') }}" alt="" width="12" height="12" draggable="false">
+      </button>
+      <button class="window-button window-close" aria-label="{{ t('close') }}" data-on-click="close()">
+        <img src="{{ asset('images/close.svg') }}" alt="" width="12" height="12" draggable="false">
+      </button>
+    </div>
+  </header>
+  {#- The page list repeats pack.json "pages"; settings sits apart at the right end. -#}
+  <nav class="nav" aria-label="{{ game.name }}">
+    {%- for item in ["home", "news", "updates", "calendar", "servers", "about", "settings"] %}
+    <button class="{{ ('nav-item nav-end' if item == 'settings' else 'nav-item') ~ (' active' if page == item else '') }}"
+      {%- if page == item %} aria-current="page"{% endif %}
+      {%- if item == "news" and article %} data-on-click="navigate('news'); set('read', {{ article.id|arg }}, true)"
+      {%- else %} data-on-click="navigate({{ item|arg }})"{% endif %}>
+      <span>{{ t(item) }}</span>
+      {%- if item == "news" and unread and state.badges %}<span class="badge" aria-label="{{ t('unread') }}: {{ unread }}">{{ unread if unread < 100 else "99+" }}</span>{% endif %}
+    </button>
+    {%- endfor %}
+  </nav>
+  <section class="page" data-key="page-{{ page }}">
+    {% include "pages/" ~ page ~ ".html" %}
+  </section>
+  {% include "launch-bar.html" %}
+  {%- if state.toast %}
+  <div class="toast" role="alert" data-key="toast" data-widget="toast" data-timeout="6000" data-on-close="set('toast', '')">
+    <span>{{ t(state.toast) }}</span>
+    <button class="toast-close" aria-label="{{ t('close') }}" data-on-click="set('toast', '')">×</button>
+  </div>
+  {%- endif %}
+  {% include "dialogs.html" %}
+</main>

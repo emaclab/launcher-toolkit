@@ -1,26 +1,23 @@
 ---
-title: Starters
-description: Choose a minimal or complete starter and create a versioned pack project with the toolkit.
+title: Starter
+description: Create a versioned pack project from the single complete example with every widget.
 sidebar:
   order: 5
 ---
 
 Create projects with `launcher-toolkit init`; no separate template repository is required.
-The command downloads `launcher-starter-minimal.zip` or `launcher-starter-complete.zip` from the
+The command downloads `launcher-starter.zip` from the
 [toolkit release](https://github.com/emaclab/launcher-toolkit/releases) of the same version as the
 executable, and verifies its SHA-256 and size against the release metadata. The first creation
 needs internet access; a verified cached starter is reused.
 
-## Choose a starter
+## One complete example
 
-| Starter | Use |
-| --- | --- |
-| `minimal` | A small complete pack: 960 × 560 window, Markdown news, persistent settings, status and progress, splash; English only |
-| `complete` | A working launcher with Home, News, Updates, Calendar, Servers, About, and Settings pages in Portuguese, English, and Spanish |
-
-Both use **plain CSS**, pack format `1`, and `"core_api": 3`. They include an icon, translations,
+The single starter demonstrates every available widget in a working launcher with Home, News,
+Updates, Calendar, Servers, About, and Settings pages in Portuguese, English, and Spanish.
+It uses **plain CSS**, pack format `1`, and `"core_api": 3`. It includes an icon, translations,
 templates, configuration, content, the restricted license, the project version pin, and a Windows
-build workflow.
+build workflow. There is no template selection.
 
 ```powershell
 launcher-toolkit init my-game
@@ -29,7 +26,7 @@ launcher-toolkit init my-game
 Or supply the values for automation:
 
 ```powershell
-launcher-toolkit init my-game --template complete --name "My Game" --game-id my-game --non-interactive
+launcher-toolkit init my-game --name "My Game" --game-id my-game --non-interactive
 ```
 
 Without `--name`, the game name defaults to the destination folder name; without `--game-id`, the
@@ -59,17 +56,17 @@ pack/
   assets/                     local images and icons
 ```
 
-The complete starter also has `examples/` outside the pack: a feed body (`feed.json`), a window
+The starter also has `examples/` outside the pack: a feed body (`feed.json`), a window
 polygon with its matching CSS (`window-polygon.json`, `polygon.css`), and a sample
 `preferences.json`. They are not part of the built pack.
 
 Each branch must contain all the files needed by its pack. Do not depend on another starter,
 branch, or directory for missing files.
 
-## Starters and the current core API
+## Starter and the current core API
 
-Both starters already use core API 3. Their launch bars handle all eight phases, show
-`launcher.blocked.processes` and `anticheat.message`, and use `launcher.check_failed` to distinguish
+The starter uses core API 3. Its launch bar handles all eight phases, shows
+`launcher.blocked.processes` and `anticheat.message`, and uses `launcher.check_failed` to distinguish
 a failed check from a running one. **Retry** and **Repair** appear after a failed check or launch;
 **Retry** also handles blocked files and an anti-cheat error in `ready`. Closing programs requires
 confirmation, and **Play** is enabled only when the launcher and anti-cheat are both `ready`.
@@ -85,12 +82,12 @@ See [launcher actions](../../reference/actions/#launcher-actions) and the
 - Change colors and layout in `pack/styles/app.css`.
 - Run `launcher-toolkit dev`, then `check` and `build`.
 
-The starters do not update existing projects automatically. Review and apply useful starter
+The starter does not update existing projects automatically. Review and apply useful starter
 changes deliberately rather than replacing customized files.
 
 ## License
 
-Starters are public downloads, **not unrestricted open-source templates**. Their included
+The starter is a public download, **not an unrestricted open-source template**. Its included
 `LICENSE` prevails over this summary. Use is restricted to launcher packs for games integrated
 with **EMAC Anti-Cheat**. Keep the license and copyright notice when copying or modifying starter
 content. Public availability does not grant rights beyond that license.

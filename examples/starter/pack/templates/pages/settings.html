@@ -1,0 +1,124 @@
+{#- Settings: each one is a pack.json state variable with "persist": true, saved in the player's
+    preferences.json. Toggles are role="switch" buttons, selects are dropdowns with one button per
+    allowed value (the renderer has no <select>), the stepper writes an int with min/max, and the
+    folder uses pick_folder. The menus are bool variables with "reset": "page". -#}
+{%- set accents = ["blue", "green", "orange", "purple"] -%}
+{%- set densities = ["comfortable", "compact"] -%}
+<div class="settings">
+  <div class="settings-columns">
+    <section class="card settings-group" aria-labelledby="appearance-heading">
+      <h2 id="appearance-heading">{{ t("appearance") }}</h2>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("accentColor") }}</strong>
+          <span class="setting-hint">{{ t("accentColorHint") }}</span>
+        </div>
+        <div class="select" data-widget="dropdown" data-open="{{ state.accent_menu }}" data-on-close="set('accent_menu', false)">
+          <button class="select-button" aria-label="{{ t('accentColor') }}" aria-expanded="{{ state.accent_menu }}" data-on-click="toggle('accent_menu')">
+            <i class="swatch" data-color="{{ state.accent }}"></i>
+            <span>{{ t("accent." ~ state.accent) }}</span>
+            <img src="{{ asset('images/caret.svg') }}" alt="" width="10" height="10" draggable="false">
+          </button>
+          {%- if state.accent_menu %}
+          <div class="select-menu" role="listbox" aria-label="{{ t('accentColor') }}">
+            {%- for value in accents %}
+            <button class="{{ 'select-option chosen' if value == state.accent else 'select-option' }}" role="option" aria-selected="{{ value == state.accent }}" data-on-click="set('accent', {{ value|arg }}); set('accent_menu', false)">
+              <i class="swatch" data-color="{{ value }}"></i>{{ t("accent." ~ value) }}
+            </button>
+            {%- endfor %}
+          </div>
+          {%- endif %}
+        </div>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("density") }}</strong>
+          <span class="setting-hint">{{ t("densityHint") }}</span>
+        </div>
+        <div class="select" data-widget="dropdown" data-open="{{ state.density_menu }}" data-on-close="set('density_menu', false)">
+          <button class="select-button" aria-label="{{ t('density') }}" aria-expanded="{{ state.density_menu }}" data-on-click="toggle('density_menu')">
+            <span>{{ t("density." ~ state.density) }}</span>
+            <img src="{{ asset('images/caret.svg') }}" alt="" width="10" height="10" draggable="false">
+          </button>
+          {%- if state.density_menu %}
+          <div class="select-menu" role="listbox" aria-label="{{ t('density') }}">
+            {%- for value in densities %}
+            <button class="{{ 'select-option chosen' if value == state.density else 'select-option' }}" role="option" aria-selected="{{ value == state.density }}" data-on-click="set('density', {{ value|arg }}); set('density_menu', false)">{{ t("density." ~ value) }}</button>
+            {%- endfor %}
+          </div>
+          {%- endif %}
+        </div>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("motion") }}</strong>
+          <span class="setting-hint">{{ t("motionHint") }}</span>
+        </div>
+        <button class="switch" role="switch" aria-label="{{ t('motion') }}" aria-checked="{{ state.motion }}" data-on-click="toggle('motion')"><span></span></button>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("language") }}</strong>
+          <span class="setting-hint">{{ t("languageHint") }}</span>
+        </div>
+        <div class="segmented" role="group" aria-label="{{ t('language') }}">
+          {%- for l in languages %}
+          <button class="{{ 'segment on' if l.code == lang else 'segment' }}" aria-pressed="{{ l.code == lang }}" data-on-click="set_language({{ l.code|arg }})">{{ l.code|upper }}</button>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+    <section class="card settings-group" aria-labelledby="launcher-heading">
+      <h2 id="launcher-heading">{{ t("launcherSettings") }}</h2>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("badges") }}</strong>
+          <span class="setting-hint">{{ t("badgesHint") }}</span>
+        </div>
+        <button class="switch" role="switch" aria-label="{{ t('badges') }}" aria-checked="{{ state.badges }}" data-on-click="toggle('badges')"><span></span></button>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("launchDetails") }}</strong>
+          <span class="setting-hint">{{ t("launchDetailsHint") }}</span>
+        </div>
+        <button class="switch" role="switch" aria-label="{{ t('launchDetails') }}" aria-checked="{{ state.launch_details }}" data-on-click="toggle('launch_details')"><span></span></button>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <strong>{{ t("articleSize") }}</strong>
+          <span class="setting-hint">{{ t("articleSizeHint") }}</span>
+        </div>
+        <div class="stepper" role="group" aria-label="{{ t('articleSize') }}">
+          <button class="icon-button" aria-label="{{ t('smaller') }}"{% if state.article_size <= 12 %} disabled{% endif %} data-on-click="set('article_size', {{ (state.article_size - 1)|arg }})">−</button>
+          <span>{{ state.article_size }} px</span>
+          <button class="icon-button" aria-label="{{ t('larger') }}"{% if state.article_size >= 18 %} disabled{% endif %} data-on-click="set('article_size', {{ (state.article_size + 1)|arg }})">+</button>
+        </div>
+      </div>
+      <div class="setting setting-path">
+        <div class="setting-text">
+          <span class="setting-title">
+            <strong>{{ t("screenshots") }}</strong>
+            <span class="tip-anchor">
+              <button class="help" aria-label="{{ t('help') }}" aria-describedby="tip-folder" data-widget="tooltip" data-state="tip" data-value="folder">?</button>
+              {%- if state.tip == "folder" %}
+              <span id="tip-folder" class="tooltip tooltip-up" role="tooltip" data-key="tip-folder">{{ t("screenshotsTip") }}</span>
+              {%- endif %}
+            </span>
+          </span>
+          <span class="path">{{ state.screenshots_dir or t("notSet") }}</span>
+        </div>
+        <div class="path-actions">
+          {%- if state.screenshots_dir %}
+          <button class="secondary-button" data-key="clear-folder" data-on-click="set('screenshots_dir', '')">{{ t("clear") }}</button>
+          {%- endif %}
+          <button class="secondary-button" data-key="choose-folder" data-on-click="pick_folder('screenshots_dir')">{{ t("choose") }}</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="settings-footer">
+    <span>{{ t("settingsSaved") }}</span>
+    <button id="reset-settings" class="secondary-button" data-on-click="set('confirm', 'reset_settings')">{{ t("resetSettings") }}</button>
+  </div>
+</div>

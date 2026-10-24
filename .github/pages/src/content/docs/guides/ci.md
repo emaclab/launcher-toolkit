@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-Both starters include `.github/workflows/pack.yml` and `.toolkit-version`.
+The starter includes `.github/workflows/pack.yml` and `.toolkit-version`.
 The workflow reads the committed version file, obtains that release's
 `launcher-toolkit-windows-x64.exe` from the public release or from its cache, verifies the size
 and SHA-256 that GitHub publishes for it, and runs `launcher-toolkit.exe build pack --out dist/pack.zip`.

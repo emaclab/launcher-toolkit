@@ -1,0 +1,77 @@
+[
+  {
+    "id": "season-2",
+    "date": "2026-10-15",
+    "category": "categoryNews",
+    "title": {
+      "pt": "Temporada 2: Fronteira",
+      "en": "Season 2: Frontier",
+      "es": "Temporada 2: Frontera"
+    },
+    "body": {
+      "pt": "A **Temporada 2** começa em 15 de novembro.\n\n## O que chega\n\n- O mapa **Fronteira**, com três zonas de combate.\n- Recompensas de temporada a cada 10 níveis.\n- A fila ranqueada com novas divisões.\n\n## Antes de começar\n\n1. Atualize o jogo pelo launcher.\n2. Confira a agenda na página **Calendário**.\n3. Leia as regras no [site oficial](https://example.com/season-2).",
+      "en": "**Season 2** starts on November 15.\n\n## What is coming\n\n- The **Frontier** map, with three combat zones.\n- Season rewards every 10 levels.\n- The ranked queue with new divisions.\n\n## Before you start\n\n1. Update the game in the launcher.\n2. Check the schedule on the **Calendar** page.\n3. Read the rules on the [official website](https://example.com/season-2).",
+      "es": "La **Temporada 2** empieza el 15 de noviembre.\n\n## Lo que llega\n\n- El mapa **Frontera**, con tres zonas de combate.\n- Recompensas de temporada cada 10 niveles.\n- La cola clasificatoria con nuevas divisiones.\n\n## Antes de empezar\n\n1. Actualiza el juego en el launcher.\n2. Consulta la agenda en la página **Calendario**.\n3. Lee las reglas en el [sitio oficial](https://example.com/season-2)."
+    }
+  },
+  {
+    "id": "welcome",
+    "date": "2026-10-12",
+    "category": "categoryNews",
+    "title": {
+      "pt": "Boas-vindas ao novo launcher",
+      "en": "Welcome to the new launcher",
+      "es": "Bienvenido al nuevo launcher"
+    },
+    "body": {
+      "pt": "O novo launcher reúne tudo o que você precisa para jogar:\n\n- atualizações do jogo baixadas e verificadas automaticamente;\n- notícias, notas de atualização, eventos e o estado dos servidores em um só lugar;\n- início do jogo com a proteção do **EMAC Anti-Cheat**.\n\nPersonalize a cor, a densidade e o tamanho do texto na página **Configurações**. Visite o [site oficial](https://example.com/) para mais informações.",
+      "en": "The new launcher brings everything you need to play together:\n\n- game updates downloaded and verified automatically;\n- news, patch notes, events and server status in one place;\n- game start with **EMAC Anti-Cheat** protection.\n\nChange the color, the density and the text size on the **Settings** page. Visit the [official website](https://example.com/) for more information.",
+      "es": "El nuevo launcher reúne todo lo que necesitas para jugar:\n\n- actualizaciones del juego descargadas y verificadas automáticamente;\n- noticias, notas de actualización, eventos y el estado de los servidores en un solo lugar;\n- inicio del juego con la protección de **EMAC Anti-Cheat**.\n\nCambia el color, la densidad y el tamaño del texto en la página **Configuración**. Visita el [sitio oficial](https://example.com/) para más información."
+    }
+  },
+  {
+    "id": "version-5",
+    "date": "2026-10-08",
+    "category": "categoryUpdate",
+    "title": {
+      "pt": "Notas da versão 5",
+      "en": "Version 5 patch notes",
+      "es": "Notas de la versión 5"
+    },
+    "body": {
+      "pt": "## Novidades\n\n- Partidas mais estáveis em conexões lentas.\n- Tempo de carregamento 30% menor.\n\n## Correções\n\n- Corrigido o som de passos em escadas.\n- Melhor desempenho em placas de vídeo integradas.\n\nAs notas completas estão na página **Atualizações**.",
+      "en": "## New\n\n- More stable matches on slow connections.\n- 30% shorter loading times.\n\n## Fixes\n\n- Fixed footstep sounds on stairs.\n- Better performance on integrated graphics.\n\nThe full notes are on the **Updates** page.",
+      "es": "## Novedades\n\n- Partidas más estables en conexiones lentas.\n- Tiempo de carga un 30% menor.\n\n## Correcciones\n\n- Corregido el sonido de pasos en escaleras.\n- Mejor rendimiento en gráficos integrados.\n\nLas notas completas están en la página **Actualizaciones**."
+    }
+  },
+  {
+    "id": "community-night",
+    "date": "2026-10-05",
+    "category": "categoryCommunity",
+    "title": {
+      "pt": "Noite da comunidade",
+      "en": "Community night",
+      "es": "Noche de la comunidad"
+    },
+    "body": {
+      "pt": "Uma quarta-feira por mês, jogue com a equipe de desenvolvimento.\n\n> As vagas são limitadas. Inscreva-se na [comunidade](https://example.com/community).\n\nAs próximas datas estão no **Calendário**.",
+      "en": "One Wednesday a month, play with the development team.\n\n> Places are limited. Sign up in the [community](https://example.com/community).\n\nThe next dates are on the **Calendar**.",
+      "es": "Un miércoles al mes, juega con el equipo de desarrollo.\n\n> Las plazas son limitadas. Inscríbete en la [comunidad](https://example.com/community).\n\nLas próximas fechas están en el **Calendario**."
+    }
+  },
+  {
+    "id": "fair-play",
+    "date": "2026-10-01",
+    "category": "categoryCommunity",
+    "title": {
+      "pt": "Jogo limpo em todas as partidas",
+      "en": "Fair play in every match",
+      "es": "Juego limpio en cada partida"
+    },
+    "body": {
+      "pt": "Este jogo é protegido pelo **EMAC Anti-Cheat**. A proteção é preparada pelo launcher antes de o jogo iniciar.\n\nViu algo suspeito? Fale com o [suporte](https://example.com/support).",
+      "en": "This game is protected by **EMAC Anti-Cheat**. The launcher prepares the protection before the game starts.\n\nSeen something suspicious? Contact [support](https://example.com/support).",
+      "es": "Este juego está protegido por **EMAC Anti-Cheat**. El launcher prepara la protección antes de que el juego inicie.\n\n¿Viste algo sospechoso? Contacta al [soporte](https://example.com/support)."
+    }
+  }
+]

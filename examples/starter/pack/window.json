@@ -1,0 +1,19 @@
+{
+  "icon": "assets/icon.ico",
+  "base_color": "#0f141c",
+  "main": {
+    "title": "Example Game Launcher",
+    "template": "layout.html",
+    "width": 1120,
+    "height": 630,
+    "polygon": null
+  },
+  "splash": {
+    "title": "Example Game",
+    "template": "splash.html",
+    "width": 640,
+    "height": 360,
+    "polygon": null,
+    "duration_ms": 4000
+  }
+}

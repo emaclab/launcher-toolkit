@@ -5,9 +5,9 @@ sidebar:
   order: 2
 ---
 
-The launch bar is the part of the main window players use most. Like the current starters, this example renders every launcher phase of core API 3, distinguishes a failed check from a running one, shows download details and the programs that block an update, offers repair and retry, explains the anti-cheat status in a tooltip, shows the last anti-cheat error, and confirms before closing programs.
+The launch bar is the part of the main window players use most. Like the starter, this example renders every launcher phase of core API 3, distinguishes a failed check from a running one, shows download details and the programs that block an update, offers repair and retry, explains the anti-cheat status in a tooltip, shows the last anti-cheat error, and confirms before closing programs.
 
-**Uses:** [`tooltip`](../../widgets/tooltip/), [`modal`](../../widgets/modal/), launcher actions, `launcher.blocked`, `launcher.check_failed`, `anticheat`, `bytes()`, `duration()`. **Core API:** 3. The [minimal pack](../minimal-pack/) includes a smaller version of this pattern.
+**Uses:** [`tooltip`](../../widgets/tooltip/), [`modal`](../../widgets/modal/), launcher actions, `launcher.blocked`, `launcher.check_failed`, `anticheat`, `bytes()`, `duration()`. **Core API:** 3. The [starter pack](../starter-pack/) includes this pattern in a runnable project.
 
 ## Declarations
 

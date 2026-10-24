@@ -1,0 +1,71 @@
+{#- Events calendar built with calendar_days, calendar_events and month_add (data/calendar.json,
+    fixed schema). An empty cal_month means the current month and an empty cal_day the whole
+    month. Selecting an event opens its dialog (dialogs.html). -#}
+{%- set month = state.cal_month or today[:7] -%}
+{%- set events = calendar_events(month, state.cal_day) -%}
+{%- set featured = data.calendar.events|selectattr("id", "eq", data.events.featured)|first -%}
+<div class="calendar">
+  <div class="calendar-main">
+    <div class="calendar-toolbar">
+      <h1>{{ month|date("month_year") }}</h1>
+      <div class="calendar-buttons">
+        <button class="icon-button" aria-label="{{ t('previousMonth') }}" data-on-click="set('cal_month', {{ month_add(month, -1)|arg }}); set('cal_day', '')">‹</button>
+        <button id="calendar-today" class="secondary-button" data-on-click="set('cal_month', ''); set('cal_day', '')">{{ t("today") }}</button>
+        <button class="icon-button" aria-label="{{ t('nextMonth') }}" data-on-click="set('cal_month', {{ month_add(month, 1)|arg }}); set('cal_day', '')">›</button>
+      </div>
+    </div>
+    <div class="weekdays">
+      {%- for day in i18n.weekdays_short %}
+      <span>{{ day }}</span>
+      {%- endfor %}
+    </div>
+    <div class="calendar-grid" data-widget="list" data-columns="7">
+      {%- for cell in calendar_days(month) %}
+      <button class="calendar-day{{ ' outside' if cell.outside }}{{ ' today' if cell.today }}{{ ' selected' if cell.date == state.cal_day }}" aria-label="{{ cell.date|date('long') }}: {{ cell.events|length }} {{ t('eventsCount') }}" aria-pressed="{{ cell.date == state.cal_day }}" data-on-click="set('cal_day', {{ cell.date|arg }})">
+        <span class="day-number">{{ cell.day }}</span>
+        {%- for event in cell.events[:2] %}
+        <span class="day-event" style="border-color:{{ event.color }}">{{ event.name|loc }}</span>
+        {%- endfor %}
+        {%- if cell.events|length > 2 %}
+        <span class="day-more">+{{ cell.events|length - 2 }}</span>
+        {%- endif %}
+      </button>
+      {%- endfor %}
+    </div>
+  </div>
+  <aside class="events-panel">
+    {%- if featured and data.calendar.countdown %}
+    {%- set clock = countdown(data.calendar.countdown.begins, data.calendar.countdown.ends) %}
+    <button class="featured-event" data-on-click="set('event', {{ featured.id|arg }})">
+      <span class="quick-label">{{ t("nextEvent") }}</span>
+      <strong>{{ featured.name|loc }}</strong>
+      <span class="quick-value" data-widget="countdown" data-refresh="30000">
+        {%- if clock.status == "upcoming" %}{{ t("startsIn") }} {{ clock.days }}d {{ clock.hours }}h {{ clock.minutes }}m{% else %}{{ t("countdown." ~ clock.status) }}{% endif -%}
+      </span>
+    </button>
+    {%- endif %}
+    <div class="events-heading">
+      <h2>{{ state.cal_day|date("long") if state.cal_day else t("monthEvents") }}</h2>
+      {%- if state.cal_day %}
+      <button class="text-button" data-on-click="set('cal_day', '')">{{ t("allEvents") }}</button>
+      {%- endif %}
+    </div>
+    <div class="event-list" data-widget="list">
+      {%- for event in events %}
+      <button class="event-row" data-key="event-{{ event.id }}" data-on-click="set('event', {{ event.id|arg }})">
+        <i class="event-color" style="background:{{ event.color }}"></i>
+        <span>
+          <strong>{{ event.name|loc }}</strong>
+          <small>
+            {%- if event.schedule %}{{ event.schedule|loc }}
+            {%- elif event.start == event.end %}{{ event.start|date("short") }}
+            {%- else %}{{ event.start|date("short") }} – {{ event.end|date("short") }}{% endif -%}
+          </small>
+        </span>
+      </button>
+      {%- else %}
+      <p class="empty" data-key="no-events">{{ t("noEvents") }}</p>
+      {%- endfor %}
+    </div>
+  </aside>
+</div>

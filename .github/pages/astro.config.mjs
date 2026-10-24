@@ -13,7 +13,7 @@ export default defineConfig({
 			// src/pages/404.astro owns this route without a duplicate docs collection entry.
 			disable404Route: true,
 			description:
-				'Guides and examples for creating, previewing, checking and building launcher packs with the Launcher Toolkit and its starters.',
+				'Guides and examples for creating, previewing, checking and building launcher packs with the Launcher Toolkit and its starter.',
 			social: [
 				{
 					icon: 'github',

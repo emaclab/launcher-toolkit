@@ -12,7 +12,7 @@ It contains the complete authoring interface. It does not include administrative
 
 ```text
 launcher-toolkit
-launcher-toolkit init [destination] [--template minimal|complete]
+launcher-toolkit init [destination]
                      [--name <name>] [--game-id <id>] [--non-interactive]
 launcher-toolkit dev [project-or-pack] [--data-dir <dir>]
 launcher-toolkit check [project-or-pack] [--json] [--data-dir <dir>] [--feed <feed.json>]
@@ -49,7 +49,7 @@ Scripts must specify a command.
 
 ## init
 
-Creates a complete project from `launcher-starter-minimal.zip` or `launcher-starter-complete.zip`
+Creates a complete project with every available widget from `launcher-starter.zip`
 of the same toolkit release. It verifies the download against the release metadata, extracts into
 a staging folder beside the destination, sets the game name and ID in `pack/pack.json`, the window
 titles in `pack/window.json`, and the release tag in `.toolkit-version`, and publishes the complete
@@ -58,15 +58,15 @@ must exist.
 
 ```powershell
 launcher-toolkit init my-game
-launcher-toolkit init my-game --template complete --name "My Game" --game-id my-game --non-interactive
+launcher-toolkit init my-game --name "My Game" --game-id my-game --non-interactive
 ```
 
-The interactive form asks for missing values (destination, starter, game name, game ID). Type
+The interactive form asks for missing values (destination, game name, game ID). Type
 `cancel` to stop. Automation should provide its choices explicitly and use `--non-interactive`;
-then the starter defaults to `minimal`, the name to the destination folder name, and the ID to a
-slug of the name. The game name must be a valid Windows folder name of 1–64 characters and the ID
-must match `[a-z0-9-]{1,64}`. Both starters use plain CSS and include the restricted license and a
-Windows CI workflow.
+the name defaults to the destination folder name and the ID to a slug of the name.
+The game name must be a valid Windows folder name of 1–64 characters and the ID
+must match `[a-z0-9-]{1,64}`. The single starter uses plain CSS and includes the restricted license
+and a Windows CI workflow.
 
 ## dev
 

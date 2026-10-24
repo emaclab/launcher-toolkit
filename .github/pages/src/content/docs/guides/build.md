@@ -99,24 +99,57 @@ stderr carries the findings and the progress lines (`excluded: …` for each exc
 
 ```text
 0 error(s), 0 warning(s)
-built minimal-example (11 files, 28992 bytes, sha256 d1c1cee65c517ae46d74e931c7b1849712a4017b810a37476d563adc5b651c78)
+built example-game (32 files, 84053 bytes, sha256 1ce08a729e5d1ac0bcaa742927429647a8fbb0a91f5d64addd41192bca85fee1)
 ```
 
 ```json
 {
   "core_api": 3,
   "excluded": [],
-  "files": ["assets/icon.ico", "data/news.json", "i18n/en.json", "pack.json", "styles/app.css", "templates/launch-bar.html", "templates/layout.html", "templates/pages/home.html", "templates/pages/settings.html", "templates/splash.html", "window.json"],
-  "game_id": "minimal-example",
-  "game_name": "Minimal Example",
-  "sha256": "d1c1cee65c517ae46d74e931c7b1849712a4017b810a37476d563adc5b651c78",
-  "size": 28992
+  "files": [
+    "assets/icon.ico",
+    "assets/images/caret.svg",
+    "assets/images/close.svg",
+    "assets/images/logo.svg",
+    "assets/images/minimize.svg",
+    "assets/images/slide-event.svg",
+    "assets/images/slide-season.svg",
+    "assets/images/slide-update.svg",
+    "data/calendar.json",
+    "data/events.json",
+    "data/faq.json",
+    "data/news.json",
+    "data/releases.json",
+    "data/servers.json",
+    "data/slides.json",
+    "i18n/en.json",
+    "i18n/es.json",
+    "i18n/pt.json",
+    "pack.json",
+    "styles/app.css",
+    "templates/dialogs.html",
+    "templates/launch-bar.html",
+    "templates/layout.html",
+    "templates/pages/about.html",
+    "templates/pages/calendar.html",
+    "templates/pages/home.html",
+    "templates/pages/news.html",
+    "templates/pages/servers.html",
+    "templates/pages/settings.html",
+    "templates/pages/updates.html",
+    "templates/splash.html",
+    "window.json"
+  ],
+  "game_id": "example-game",
+  "game_name": "Example Game",
+  "sha256": "1ce08a729e5d1ac0bcaa742927429647a8fbb0a91f5d64addd41192bca85fee1",
+  "size": 84053
 }
 ```
 
-This example is from the unmodified minimal starter's `pack/` folder (and from
-`examples/minimal-pack` in this repository, which has the same files). The actual JSON output is
-one line; game metadata and `excluded` change with your project.
+This example is from the unmodified starter's `pack/` folder (also available as
+`examples/starter` in this repository). The actual JSON output is one line; game metadata and
+`excluded` change with your project.
 
 | Field | Meaning |
 | --- | --- |

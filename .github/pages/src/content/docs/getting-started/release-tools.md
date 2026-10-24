@@ -6,13 +6,12 @@ sidebar:
 ---
 
 Download the toolkit from [its public releases](https://github.com/emaclab/launcher-toolkit/releases).
-Each release contains exactly three assets:
+Each release contains exactly two assets:
 
 | Asset | Use |
 | --- | --- |
 | `launcher-toolkit-windows-x64.exe` | The authoring executable: projects, preview, simulator, checks, builds, reference |
-| `launcher-starter-minimal.zip` | The minimal starter project |
-| `launcher-starter-complete.zip` | The complete starter project |
+| `launcher-starter.zip` | The complete starter project with every available widget |
 
 The asset names do not contain the version; the release tag (`vX.Y.Z`) identifies it.
 There are no separate Studio, publisher, Linux, or CSS compiler downloads.
@@ -48,7 +47,7 @@ Do not execute a file whose size or hash differs. Download it again from the cor
 Inside a starter project, read `$tag` from the project's `.toolkit-version` instead; the starter
 README contains that variant.
 
-The toolkit applies the same rule to everything it downloads itself (starters for `init`, the
+The toolkit applies the same rule to everything it downloads itself (the starter for `init`, the
 executable for `update`): it reads the current release metadata, accepts exactly one asset with
 the expected name, and checks its size and SHA-256 before using it, including cached copies.
 
@@ -100,5 +99,5 @@ programs in `.local\bin`, unmanaged `PATH` entries, your projects, and their pac
 
 ## Licenses
 
-Starter use remains subject to the restricted license included in each starter; see
+Starter use remains subject to the restricted license included in the project; see
 [starters](../starters/#license). Third-party materials keep their own licenses.
