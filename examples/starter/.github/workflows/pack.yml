@@ -1,0 +1,108 @@
+# Validate and build with the public toolkit release pinned by this project.
+name: pack
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Read the project pin and fresh release asset metadata
+        id: toolkit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tag = [IO.File]::ReadAllText((Join-Path $PWD '.toolkit-version')).Trim()
+          if ($tag -cnotmatch '^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') {
+            throw '.toolkit-version must contain a stable vMAJOR.MINOR.PATCH release tag.'
+          }
+          $asset = 'launcher-toolkit-windows-x64.exe'
+          $tools = Join-Path $env:RUNNER_TEMP 'launcher-toolkit'
+          New-Item -ItemType Directory -Path $tools | Out-Null
+          $response = gh api "repos/emaclab/launcher-toolkit/releases/tags/$tag" `
+            -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2026-03-10'
+          if ($LASTEXITCODE -ne 0) { throw "Release metadata request failed (exit code $LASTEXITCODE)." }
+          $release = $response | ConvertFrom-Json
+          if ($release.tag_name -cne $tag -or $release.draft -ne $false) {
+            throw 'The toolkit release must be published with the selected tag.'
+          }
+          $matchingAssets = @($release.assets | Where-Object { $_.name -ceq $asset })
+          if ($matchingAssets.Count -ne 1) { throw "The release must contain exactly one asset named $asset." }
+          $metadata = $matchingAssets[0]
+          if ($metadata.digest -isnot [string] -or $metadata.digest -cnotmatch '^sha256:[0-9a-fA-F]{64}$' -or
+              ($metadata.size -isnot [long] -and $metadata.size -isnot [int]) -or $metadata.size -le 0) {
+            throw "Invalid SHA-256 digest or size metadata for $asset."
+          }
+          $expected = $metadata.digest.Substring(7).ToLowerInvariant()
+          [IO.File]::AppendAllLines($env:GITHUB_OUTPUT, [string[]]@(
+            "tag=$tag", "asset=$asset", "sha256=$expected", "size=$($metadata.size)", "directory=$tools"
+          ), [Text.UTF8Encoding]::new($false))
+
+      - name: Restore the pinned toolkit
+        id: toolkit-cache
+        uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ${{ steps.toolkit.outputs.directory }}/launcher-toolkit.exe
+          key: author-cli-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.toolkit.outputs.tag }}-${{ steps.toolkit.outputs.sha256 }}-${{ steps.toolkit.outputs.size }}
+
+      - name: Acquire and verify the pinned toolkit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TOOLKIT_TAG: ${{ steps.toolkit.outputs.tag }}
+          TOOLKIT_ASSET: ${{ steps.toolkit.outputs.asset }}
+          TOOLKIT_SHA256: ${{ steps.toolkit.outputs.sha256 }}
+          TOOLKIT_SIZE: ${{ steps.toolkit.outputs.size }}
+          TOOLKIT_DIRECTORY: ${{ steps.toolkit.outputs.directory }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tool = Join-Path $env:TOOLKIT_DIRECTORY 'launcher-toolkit.exe'
+          if (-not (Test-Path -LiteralPath $tool -PathType Leaf)) {
+            gh release download $env:TOOLKIT_TAG --repo emaclab/launcher-toolkit --pattern $env:TOOLKIT_ASSET --dir $env:TOOLKIT_DIRECTORY
+            if ($LASTEXITCODE -ne 0) { throw "Toolkit download failed (exit code $LASTEXITCODE)." }
+            Move-Item -LiteralPath (Join-Path $env:TOOLKIT_DIRECTORY $env:TOOLKIT_ASSET) -Destination $tool
+          }
+          if ((Get-Item -LiteralPath $tool).Length -ne [long]$env:TOOLKIT_SIZE) {
+            throw "Size mismatch for $env:TOOLKIT_ASSET."
+          }
+          $actual = (Get-FileHash -LiteralPath $tool -Algorithm SHA256).Hash
+          if ($actual -ine $env:TOOLKIT_SHA256) { throw "SHA-256 mismatch for $env:TOOLKIT_ASSET." }
+          [IO.File]::AppendAllText($env:GITHUB_PATH, "$env:TOOLKIT_DIRECTORY`n", [Text.UTF8Encoding]::new($false))
+
+      - name: Check and build the pack
+        run: |
+          $report = @(launcher-toolkit.exe build pack --out dist/pack.zip)
+          if ($LASTEXITCODE -ne 0) { throw "Pack build failed (exit code $LASTEXITCODE)." }
+          [IO.File]::WriteAllLines((Join-Path $PWD 'dist/pack.json'), [string[]]$report, [Text.UTF8Encoding]::new($false))
+          $report
+
+      # Only trusted default-branch pushes save reusable, verified tool bytes.
+      - name: Save the pinned toolkit
+        if: github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && steps.toolkit-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ${{ steps.toolkit.outputs.directory }}/launcher-toolkit.exe
+          key: ${{ steps.toolkit-cache.outputs.cache-primary-key }}
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: pack-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error

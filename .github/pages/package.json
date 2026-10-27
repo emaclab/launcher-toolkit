@@ -1,0 +1,29 @@
+{
+  "name": "launcher-toolkit-docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Developer documentation for launcher packs, built with Astro Starlight and deployed to GitHub Pages",
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.7",
+    "astro": "7.4.2",
+    "sharp": "0.35.5"
+  },
+  "overrides": {
+    "@expressive-code/core@0.44.2": {
+      "postcss-nested@6.2.0": {
+        "postcss-selector-parser": "7.1.6"
+      }
+    }
+  }
+}

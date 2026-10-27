@@ -1,0 +1,39 @@
+{
+  "format": 1,
+  "core_api": 1,
+  "game": {
+    "id": "example-game",
+    "name": "Example Game",
+    "client_version": 5,
+    "download_size": 2147483648,
+    "allowed_hosts": ["example.com"],
+    "network_hosts": ["example.com"],
+    "links": {
+      "website": "https://example.com/",
+      "community": "https://example.com/community",
+      "support": "https://example.com/support"
+    },
+    "requirements": {
+      "minimum": [
+        { "label": "os", "value": "Windows 10 64-bit" },
+        { "label": "cpu", "value": "Intel Core i3-6100 · AMD Ryzen 3 1200" },
+        { "label": "ram", "value": "4 GB" },
+        { "label": "gpu", "value": "Intel HD Graphics 530 · NVIDIA GT 1030" },
+        { "label": "storage", "value": "4 GB" }
+      ],
+      "recommended": [
+        { "label": "os", "value": "Windows 11 64-bit" },
+        { "label": "cpu", "value": "Intel Core i5-10400 · AMD Ryzen 5 3600" },
+        { "label": "ram", "value": "8 GB" },
+        { "label": "gpu", "value": "NVIDIA GTX 1060 · AMD RX 580" },
+        { "label": "storage", "value": "4 GB SSD" }
+      ]
+    },
+    "info": {
+      "developer": "Example Studio",
+      "publisher": "Example Studio",
+      "release_date": "2026-01-15",
+      "age_rating": "12+"
+    }
+  }
+}

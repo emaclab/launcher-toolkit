@@ -1,0 +1,2 @@
+# Keep pack bytes unchanged across checkouts for consistent builds.
+* -text

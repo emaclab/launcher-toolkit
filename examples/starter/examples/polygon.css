@@ -1,0 +1,10 @@
+/* Append to pack/styles/app.css together with examples/window-polygon.json. The clip-path of
+   each root element repeats its window polygon (logical px); launcher-toolkit check compares them. */
+
+.app {
+  clip-path: polygon(0 0, 1106px 0, 1120px 14px, 1120px 630px, 14px 630px, 0 616px);
+}
+
+.splash {
+  clip-path: polygon(24px 0, 616px 0, 640px 24px, 640px 336px, 616px 360px, 24px 360px, 0 336px, 0 24px);
+}

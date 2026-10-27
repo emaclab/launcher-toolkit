@@ -1,0 +1,11 @@
+# Build e arquivos gerados pelo Astro
+dist/
+.astro/
+
+# Dependências e logs
+node_modules/
+npm-debug.log*
+
+# Variáveis de ambiente
+.env
+.env.production

@@ -1,0 +1,89 @@
+{
+  "releases": [
+    {
+      "version": 5,
+      "date": "2026-10-08",
+      "title": { "pt": "Estabilidade", "en": "Stability", "es": "Estabilidad" },
+      "notes": {
+        "client": {
+          "pt": "## Novidades\n\n- Partidas mais estáveis em conexões lentas.\n- Tempo de carregamento 30% menor.\n- Novo filtro de daltonismo nas opções de vídeo.\n\n## Correções\n\n- Corrigido o som de passos em escadas.\n- Melhor desempenho em placas de vídeo integradas.",
+          "en": "## New\n\n- More stable matches on slow connections.\n- 30% shorter loading times.\n- A new color-blind filter in the video options.\n\n## Fixes\n\n- Fixed footstep sounds on stairs.\n- Better performance on integrated graphics.",
+          "es": "## Novedades\n\n- Partidas más estables en conexiones lentas.\n- Tiempo de carga un 30% menor.\n- Nuevo filtro para daltonismo en las opciones de video.\n\n## Correcciones\n\n- Corregido el sonido de pasos en escaleras.\n- Mejor rendimiento en gráficos integrados."
+        },
+        "server": {
+          "pt": "## Servidores\n\n- Nova região: **América do Norte**.\n- Reconexão automática após uma queda de até 60 segundos.\n\n## Correções\n\n- A fila ranqueada não perde mais a posição ao trocar de região.",
+          "en": "## Servers\n\n- A new region: **North America**.\n- Automatic reconnection after a drop of up to 60 seconds.\n\n## Fixes\n\n- The ranked queue keeps its position when you change the region.",
+          "es": "## Servidores\n\n- Nueva región: **Norteamérica**.\n- Reconexión automática tras una caída de hasta 60 segundos.\n\n## Correcciones\n\n- La cola clasificatoria ya no pierde la posición al cambiar de región."
+        }
+      }
+    },
+    {
+      "version": 4,
+      "date": "2026-08-20",
+      "title": { "pt": "Ranqueadas", "en": "Ranked", "es": "Clasificatorias" },
+      "notes": {
+        "client": {
+          "pt": "## Novidades\n\n- Fila ranqueada com cinco divisões.\n- Histórico das últimas 20 partidas.",
+          "en": "## New\n\n- A ranked queue with five divisions.\n- History of the last 20 matches.",
+          "es": "## Novedades\n\n- Cola clasificatoria con cinco divisiones.\n- Historial de las últimas 20 partidas."
+        },
+        "server": {
+          "pt": "- Balanceamento de partidas por divisão.\n- Limite de 3 mil jogadores por região.",
+          "en": "- Matchmaking by division.\n- A limit of 3,000 players per region.",
+          "es": "- Emparejamiento por división.\n- Límite de 3000 jugadores por región."
+        }
+      }
+    },
+    {
+      "version": 3,
+      "date": "2026-06-10",
+      "title": { "pt": "Novo mapa", "en": "New map", "es": "Nuevo mapa" },
+      "notes": {
+        "client": {
+          "pt": "- Novo mapa para partidas casuais.\n- Fila mais rápida nos horários de pico.",
+          "en": "- A new map for casual matches.\n- Faster matchmaking at peak hours.",
+          "es": "- Un nuevo mapa para partidas casuales.\n- Emparejamiento más rápido en horas pico."
+        },
+        "server": {
+          "pt": "- Servidores com menor latência na Europa.",
+          "en": "- Servers with lower latency in Europe.",
+          "es": "- Servidores con menor latencia en Europa."
+        }
+      }
+    },
+    {
+      "version": 2,
+      "date": "2026-03-25",
+      "title": { "pt": "Correções", "en": "Fixes", "es": "Correcciones" },
+      "notes": {
+        "client": {
+          "pt": "- Corrigidos travamentos ao trocar de janela.\n- Novas opções de áudio.",
+          "en": "- Fixed freezes when switching windows.\n- New audio options.",
+          "es": "- Corregidos los bloqueos al cambiar de ventana.\n- Nuevas opciones de audio."
+        },
+        "server": {
+          "pt": "- Menos desconexões em partidas longas.",
+          "en": "- Fewer disconnections in long matches.",
+          "es": "- Menos desconexiones en partidas largas."
+        }
+      }
+    },
+    {
+      "version": 1,
+      "date": "2026-01-15",
+      "title": { "pt": "Lançamento", "en": "Launch", "es": "Lanzamiento" },
+      "notes": {
+        "client": {
+          "pt": "Primeira versão pública do jogo.",
+          "en": "The first public version of the game.",
+          "es": "La primera versión pública del juego."
+        },
+        "server": {
+          "pt": "Servidores na América do Sul e na Europa.",
+          "en": "Servers in South America and Europe.",
+          "es": "Servidores en Sudamérica y Europa."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "season",
+    "category": "categoryNews",
+    "image": "images/slide-season.svg",
+    "title": {
+      "pt": "Temporada 2: Fronteira",
+      "en": "Season 2: Frontier",
+      "es": "Temporada 2: Frontera"
+    },
+    "text": {
+      "pt": "Um novo mapa, recompensas de temporada e a fila ranqueada renovada.",
+      "en": "A new map, season rewards and a refreshed ranked queue.",
+      "es": "Un nuevo mapa, recompensas de temporada y la cola clasificatoria renovada."
+    },
+    "link": { "page": "news", "article": "season-2" }
+  },
+  {
+    "id": "update",
+    "category": "categoryUpdate",
+    "image": "images/slide-update.svg",
+    "title": {
+      "pt": "Versão 5 disponível",
+      "en": "Version 5 is out",
+      "es": "Versión 5 disponible"
+    },
+    "text": {
+      "pt": "Partidas mais estáveis, menos tempo de carregamento e correções de balanceamento.",
+      "en": "More stable matches, shorter loading times and balance fixes.",
+      "es": "Partidas más estables, menos tiempo de carga y correcciones de balance."
+    },
+    "link": { "page": "updates" }
+  },
+  {
+    "id": "launch-week",
+    "category": "categoryEvent",
+    "image": "images/slide-event.svg",
+    "title": {
+      "pt": "Semana de lançamento",
+      "en": "Launch week",
+      "es": "Semana de lanzamiento"
+    },
+    "text": {
+      "pt": "Sete dias de desafios diários e o dobro de experiência em todas as partidas.",
+      "en": "Seven days of daily challenges and double experience in every match.",
+      "es": "Siete días de desafíos diarios y el doble de experiencia en cada partida."
+    },
+    "link": { "page": "calendar", "event": "launch-week" }
+  }
+]

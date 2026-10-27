@@ -1,0 +1,47 @@
+---
+title: Launcher Toolkit
+description: Create, preview, check, and build a launcher pack written in HTML, CSS, and JavaScript.
+template: splash
+hero:
+  tagline: Write your game's launcher in HTML, CSS, and JavaScript. Preview it live, check it headless, and build the pack with one Windows tool.
+  actions:
+    - text: Quickstart
+      link: /launcher-toolkit/getting-started/quickstart/
+      icon: rocket
+    - text: Download the toolkit
+      link: https://github.com/emaclab/launcher-toolkit/releases/latest
+      icon: external
+      variant: secondary
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+```powershell
+launcher-toolkit init my-game
+cd my-game
+launcher-toolkit dev
+launcher-toolkit check
+launcher-toolkit build
+```
+
+The starter is a complete launcher in Preact + htm with plain CSS, no build step, and a Windows CI
+workflow. You need no Rust, Node.js, npm, CSS compiler, or separate Studio.
+
+<CardGrid>
+  <LinkCard title="Get started" description="What a pack is, installation, and a first build."
+    href="/launcher-toolkit/getting-started/overview/" />
+  <LinkCard title="Pack Studio" description="Live preview with hot reload and a session simulator."
+    href="/launcher-toolkit/guides/studio/" />
+  <LinkCard title="The launcher bridge" description="Snapshot, requests, data, links, storage, and errors."
+    href="/launcher-toolkit/reference/bridge/" />
+  <LinkCard title="Patterns" description="Launch bar, dialogs, menus, data with cache, and Markdown from the starter."
+    href="/launcher-toolkit/patterns/" />
+</CardGrid>
+
+<Aside type="caution" title="Preview limits">
+Pack Studio simulates the game update, the anti-cheat status, and the game start, so you can test
+every state of your UI. It never installs or starts a game.
+</Aside>
+
+The starter is a public download with a [restricted license](/launcher-toolkit/getting-started/starter/#license)
+for games integrated with EMAC Anti-Cheat. Keep its license notices.

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "anticheat",
+    "question": {
+      "pt": "Por que o launcher prepara o anti-cheat?",
+      "en": "Why does the launcher prepare the anti-cheat?",
+      "es": "¿Por qué el launcher prepara el anti-cheat?"
+    },
+    "answer": {
+      "pt": "O jogo só inicia com o **EMAC Anti-Cheat** pronto. O launcher verifica e atualiza a proteção antes de liberar o botão **Jogar**.",
+      "en": "The game starts only with **EMAC Anti-Cheat** ready. The launcher checks and updates the protection before it enables the **Play** button.",
+      "es": "El juego solo inicia con **EMAC Anti-Cheat** listo. El launcher verifica y actualiza la protección antes de habilitar el botón **Jugar**."
+    }
+  },
+  {
+    "id": "download",
+    "question": {
+      "pt": "Posso pausar uma atualização?",
+      "en": "Can I pause an update?",
+      "es": "¿Puedo pausar una actualización?"
+    },
+    "answer": {
+      "pt": "Sim. Use **Pausar** e **Continuar** na barra inferior. **Cancelar** pede confirmação e interrompe a atualização; depois, use **Tentar novamente**.",
+      "en": "Yes. Use **Pause** and **Resume** in the bottom bar. **Cancel** asks for confirmation and stops the update; then use **Retry**.",
+      "es": "Sí. Usa **Pausar** y **Reanudar** en la barra inferior. **Cancelar** pide confirmación y detiene la actualización; después, usa **Reintentar**."
+    }
+  },
+  {
+    "id": "settings",
+    "question": {
+      "pt": "Onde ficam as minhas configurações?",
+      "en": "Where are my settings stored?",
+      "es": "¿Dónde se guardan mis ajustes?"
+    },
+    "answer": {
+      "pt": "Neste computador, na pasta de dados do launcher. Use **Restaurar padrões** em **Configurações** para voltar ao início.",
+      "en": "On this computer, in the launcher data folder. Use **Restore defaults** in **Settings** to start over.",
+      "es": "En este equipo, en la carpeta de datos del launcher. Usa **Restaurar valores** en **Configuración** para empezar de nuevo."
+    }
+  },
+  {
+    "id": "servers",
+    "question": {
+      "pt": "Como sei se um servidor está em manutenção?",
+      "en": "How do I know that a server is in maintenance?",
+      "es": "¿Cómo sé si un servidor está en mantenimiento?"
+    },
+    "answer": {
+      "pt": "A página **Servidores** mostra o estado de cada região e a hora da última atualização. A manutenção programada também aparece no **Calendário**.",
+      "en": "The **Servers** page shows the status of each region and the time of the last update. Scheduled maintenance is also on the **Calendar**.",
+      "es": "La página **Servidores** muestra el estado de cada región y la hora de la última actualización. El mantenimiento programado también aparece en el **Calendario**."
+    }
+  },
+  {
+    "id": "support",
+    "question": {
+      "pt": "Como falo com o suporte?",
+      "en": "How do I contact support?",
+      "es": "¿Cómo contacto al soporte?"
+    },
+    "answer": {
+      "pt": "Abra a [central de suporte](https://example.com/support) e informe a versão do jogo, que aparece na barra inferior.",
+      "en": "Open the [support center](https://example.com/support) and give the game version, which is in the bottom bar.",
+      "es": "Abre el [centro de soporte](https://example.com/support) e indica la versión del juego, que aparece en la barra inferior."
+    }
+  }
+]

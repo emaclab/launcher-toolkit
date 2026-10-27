@@ -1,0 +1,81 @@
+# Documentation site: builds the Astro Starlight site of this repository with the locked
+# dependencies and deploys it to GitHub Pages (https://emaclab.github.io/launcher-toolkit/).
+# Every push to main builds and deploys, whatever files it changes: a force-pushed commit has
+# no reliable diff for a path filter, so main has none. Pull requests that touch the site or
+# this workflow only build. A manual run from main also deploys. Nothing here depends on tags
+# or releases, which the core repository creates. No secrets.
+name: pages
+
+on:
+  pull_request:
+    paths:
+      - '.github/pages/**'
+      - '.github/workflows/pages.yml'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  # Superseded PR builds may stop; deployments from main always finish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: .github/pages
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Restore npm downloads
+        id: npm-cache
+        uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ~/.npm
+          key: pages-npm-v1-${{ runner.os }}-${{ runner.arch }}-node24-${{ hashFiles('.github/pages/package-lock.json') }}
+          restore-keys: |
+            pages-npm-v1-${{ runner.os }}-${{ runner.arch }}-node24-
+
+      - name: Install locked dependencies
+        run: npm ci --prefer-offline --no-fund
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Save npm downloads
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ~/.npm
+          key: ${{ steps.npm-cache.outputs.cache-primary-key }}
+
+      - if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: .github/pages/dist/
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
