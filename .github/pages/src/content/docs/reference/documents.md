@@ -95,6 +95,10 @@ reduced-motion media query. Implement the behavior in JS and check it in Pack St
   focus: render closed menus and panels conditionally.
 - **Visibility.** `visibility: hidden` hides the subtree. Hit testing ignores `clip-path`.
 - **Text** renders on the CPU without hinting, with a slight embolden.
+- **Line breaks.** In incremental layout, wrappable text measured at its min-content width (for
+  example, for the automatic minimum size of a flex item) can keep the line breaks of that
+  measurement while the final layout comes from the cache, and the stale break paints over the
+  content that follows. Use `white-space: nowrap` on short labels inside flex items.
 - **Forms.** There is no `<select>`; build a dropdown with one button per value.
 - **Events.** Native keyboard and pointer events bubble through the elements to `window`, never to
   `document`: put global listeners (Escape, focus trap, click outside) on `window`.
