@@ -119,7 +119,7 @@ export function LaunchBar() {
         !failed &&
         html`<button class="secondary" key="check" onClick=${() => request("check")}>${t("checkUpdates")}</button>`}
         ${retry
-          ? html`<button id="launch-primary" key="retry" class="play" onClick=${() => request("retry")}>${t("retry")}</button>`
+          ? html`<button id="launch-primary" key="retry" class="play retry" onClick=${() => request("retry")}>${t("retry")}</button>`
           : html`<button
               id="launch-primary"
               key="play"

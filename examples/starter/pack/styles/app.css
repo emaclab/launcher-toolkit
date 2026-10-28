@@ -1759,9 +1759,13 @@ img {
   background: var(--danger);
 }
 
+/* No wrapping: the label and the status are short, and the renderer can paint a stale line break
+   (for example "ANTI-" / "CHEAT") over the status when an incremental relayout measures this
+   column at its min-content width. */
 .protection-text {
   display: flex;
   flex-direction: column;
+  white-space: nowrap;
 }
 
 .protection-label {
@@ -1884,6 +1888,8 @@ img {
   border-color: var(--accent);
 }
 
+/* One centered line in the fixed 190 px; `.retry` makes the longer label fit (pt-BR: "TENTAR
+   NOVAMENTE"). Without wrapping, the renderer cannot paint a stale line break either. */
 .play {
   display: flex;
   align-items: center;
@@ -1898,6 +1904,12 @@ img {
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.play.retry {
+  font-size: 15px;
+  letter-spacing: 1px;
 }
 
 .play:not(:disabled):hover {
