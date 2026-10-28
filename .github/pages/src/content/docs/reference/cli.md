@@ -82,4 +82,5 @@ against fresh release metadata before each use.
 ## version, help
 
 `version`, `--version`, and `-V` print the version; `help`, `--help`, and `-h` print the command
-list.
+list. `--help` or `-h` after any other command (`launcher-toolkit check --help`) prints the same
+list and exits with `0` without running the command; after `--`, it is read as a path.
